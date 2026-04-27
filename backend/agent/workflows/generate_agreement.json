@@ -1,0 +1,215 @@
+{
+  "_metadata": {
+    "entity_type": "agreement",
+    "operation": "create",
+    "current_data_key": "current_agreement_data",
+    "workflowType": "create"
+  },
+  "name": "Generate Agreement",
+  "description": "Create a new service agreement for a hotel customer with products, pricing, and billing configuration",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": false,
+      "skipIfAllOptional": false
+    }
+  },
+  "api": "CREATE_AGREEMENT",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Select Customer",
+      "layout": "compact",
+      "description": "Choose the hotel/customer for this agreement.",
+      "field_names": ["customer_id"],
+      "form": {
+        "fields": [
+          {
+            "name": "customer_id",
+            "type": "lookup",
+            "label": "Search Customer / Hotel",
+            "data_source": "CUSTOMER_SEARCH",
+            "placeholder": "Type hotel name to search...",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Agreement Details",
+      "layout": "full",
+      "description": "Define the agreement type, dates, and room details.",
+      "field_names": ["agreement_type", "start_date", "end_date", "total_rooms", "occupancy_rate"],
+      "form": {
+        "fields": [
+          {
+            "name": "agreement_type",
+            "type": "dropdown",
+            "options": ["RENTAL_LAUNDRY", "LAUNDRY"],
+            "required": true,
+            "placeholder": "Select agreement type..."
+          },
+          {
+            "name": "start_date",
+            "type": "date",
+            "required": true,
+            "placeholder": "YYYY-MM-DD"
+          },
+          {
+            "name": "end_date",
+            "type": "date",
+            "required": true,
+            "placeholder": "YYYY-MM-DD"
+          },
+          {
+            "name": "total_rooms",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 150"
+          },
+          {
+            "name": "occupancy_rate",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 75.0"
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "title": "Products & Services",
+      "layout": "full",
+      "description": "Add products with their quantity, price, service type, and remarks. Use the '+ Add Product' button to add multiple products.",
+      "field_names": ["products"],
+      "form": {
+        "multiple": true,
+        "min_entries": 1,
+        "add_label": "Add Product",
+        "list_key": "products",
+        "fields": [
+          {
+            "name": "productId",
+            "label": "Product",
+            "type": "dropdown",
+            "data_source": "PRODUCT_LIST",
+            "required": true,
+            "placeholder": "Select product..."
+          },
+          {
+            "name": "quantity",
+            "label": "Quantity",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 100"
+          },
+          {
+            "name": "price",
+            "label": "Price per Unit",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 50.00"
+          },
+          {
+            "name": "serviceType",
+            "label": "Service Type",
+            "type": "dropdown",
+            "options": [
+              "FOLDING", "PACKAGING", "RENTING", "DRY_CLEANING",
+              "WASHING_IRONING", "PRESSING", "WASHING", "WASHING_RENTING"
+            ],
+            "required": true,
+            "placeholder": "Select service type..."
+          },
+          {
+            "name": "remarks",
+            "label": "Remarks",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. White color only"
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "title": "Linen Configuration",
+      "layout": "full",
+      "description": "Configure linen delivery and service settings.",
+      "field_names": ["deposit_amount", "service_frequency", "linen_delivery_days"],
+      "form": {
+        "fields": [
+          {
+            "name": "deposit_amount",
+            "label": "Deposit Amount",
+            "type": "number",
+            "required":true,
+            "placeholder": "e.g. 50000.00"
+          },
+          {
+            "name": "service_frequency",
+            "label": "Service Frequency",
+            "type": "dropdown",
+            "options": ["EVERY_DAY", "ALTERNATE_DAY", "EVERY_SUNDAY", "CUSTOM"],
+            "required": true,
+            "placeholder": "Select frequency..."
+          },
+          {
+            "name": "linen_delivery_days",
+            "label": "Linen Delivery Days",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 3"
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "title": "Billing Configuration",
+      "layout": "full",
+      "description": "Configure billing type, credit terms, and billing cycle.",
+      "field_names": ["billing_type", "credit_days", "billing_cycle", "billing_start_day", "billing_end_day"],
+      "form": {
+        "fields": [
+          {
+            "name": "billing_type",
+            "label": "Billing Type",
+            "type": "dropdown",
+            "options": ["FLEXIBLE", "FIXED"],
+            "required": true,
+            "placeholder": "Select billing type..."
+          },
+          {
+            "name": "credit_days",
+            "label": "Credit Days",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 15"
+          },
+          {
+            "name": "billing_cycle",
+            "label": "Billing Cycle (days)",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 30"
+          },
+          {
+            "name": "billing_start_day",
+            "label": "Billing Start Day",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 1"
+          },
+          {
+            "name": "billing_end_day",
+            "label": "Billing End Day",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 30"
+          }
+        ]
+      }
+    }
+  ]
+}

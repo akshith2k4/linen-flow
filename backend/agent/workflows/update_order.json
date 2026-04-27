@@ -1,0 +1,127 @@
+{
+  "_metadata": {
+    "entity_type": "order",
+    "operation": "update",
+    "current_data_key": "current_order_data",
+    "workflowType": "update"
+  },
+  "name": "Update Existing Order",
+  "description": "Update an existing order by its ID. Dates, order type, and item quantities can be modified.",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": false,
+      "skipIfAllOptional": false
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "title": "Enter Order ID",
+      "layout": "compact",
+      "description": "Enter the Order ID you want to update.",
+      "field_names": [
+        "order_id"
+      ],
+      "fetch_current_data": "GET_ORDER",
+      "form": {
+        "fields": [
+          {
+            "name": "order_id",
+            "type": "number",
+            "label": "Order ID",
+            "required": true,
+            "placeholder": "e.g. 12345",
+            "validation": {
+              "required": "Order ID is required",
+              "min": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Update Dates & Order Type",
+      "layout": "full",
+      "description": "Update pickup date, delivery date, and leasing order type. Current values are pre-filled.",
+      "field_names": [
+        "pickupDate",
+        "deliveryDate",
+        "leasingOrderType"
+      ],
+      "api": "UPDATE_ORDER",
+      "form": {
+        "fields": [
+          {
+            "name": "leasingOrderType",
+            "label": "Leasing Order Type",
+            "type": "dropdown",
+            "options": [
+              {
+                "label": "Pickup Only",
+                "value": "PICKUP"
+              },
+              {
+                "label": "Delivery Only",
+                "value": "DELIVERY"
+              },
+              {
+                "label": "Both (Pickup & Delivery)",
+                "value": "BOTH"
+              }
+            ],
+            "required": false,
+            "placeholder": "Select order type..."
+          },
+          {
+            "name": "pickupDate",
+            "label": "Pickup Date",
+            "type": "datetime-local",
+            "required": false,
+            "placeholder": "YYYY-MM-DDTHH:MM"
+          },
+          {
+            "name": "deliveryDate",
+            "label": "Delivery Date",
+            "type": "datetime-local",
+            "required": false,
+            "placeholder": "YYYY-MM-DDTHH:MM"
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "title": "Update Item Quantities",
+      "layout": "full",
+      "description": "Update quantities for delivery items. Current items are pre-filled from the order.",
+      "field_names": [
+        "deliveryItems"
+      ],
+      "api": "UPDATE_ORDER",
+      "form": {
+        "multiple": true,
+        "min_entries": 1,
+        "add_label": "Add Item",
+        "list_key": "deliveryItems",
+        "fields": [
+          {
+            "name": "productId",
+            "label": "Product",
+            "type": "dropdown",
+            "data_source": "PRODUCT_LIST",
+            "required": true,
+            "placeholder": "Select product..."
+          },
+          {
+            "name": "quantity",
+            "label": "Quantity",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 100"
+          }
+        ]
+      }
+    }
+  ]
+}

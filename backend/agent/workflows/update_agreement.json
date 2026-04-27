@@ -1,0 +1,252 @@
+{
+  "_metadata": {
+    "entity_type": "agreement",
+    "operation": "update",
+    "current_data_key": "current_agreement_data",
+    "workflowType": "update"
+  },
+  "name": "Update Agreement",
+  "description": "Update the active agreement for a customer. Only the currently active agreement can be edited.",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": false,
+      "skipIfAllOptional": false
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "title": "Select Customer",
+      "layout": "compact",
+      "description": "Choose the customer whose agreement you want to update.",
+      "field_names": [
+        "customer_id"
+      ],
+      "form": {
+        "fields": [
+          {
+            "name": "customer_id",
+            "type": "lookup",
+            "label": "Search Customer / Hotel",
+            "data_source": "CUSTOMER_SEARCH",
+            "placeholder": "Type hotel name to search...",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Agreement Details",
+      "layout": "full",
+      "description": "Update agreement dates and basic details. Current values are pre-filled.",
+      "field_names": [
+        "start_date",
+        "end_date",
+        "total_rooms",
+        "occupancy_rate"
+      ],
+      "fetch_current_data": "GET_AGREEMENT",
+      "api": "UPDATE_AGREEMENT",
+      "form": {
+        "fields": [
+          {
+            "name": "start_date",
+            "label": "Start Date",
+            "type": "date",
+            "required": false,
+            "placeholder": "YYYY-MM-DD"
+          },
+          {
+            "name": "end_date",
+            "label": "End Date",
+            "type": "date",
+            "required": false,
+            "placeholder": "YYYY-MM-DD"
+          },
+          {
+            "name": "total_rooms",
+            "label": "Total Rooms",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 150"
+          },
+          {
+            "name": "occupancy_rate",
+            "label": "Occupancy Rate (%)",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 75.0"
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "title": "Products & Services",
+      "layout": "full",
+      "description": "Update products with their quantity, price, and service type. Current products are pre-filled.",
+      "field_names": [
+        "products"
+      ],
+      "fetch_current_data": "GET_AGREEMENT",
+      "api": "UPDATE_AGREEMENT",
+      "form": {
+        "multiple": true,
+        "min_entries": 1,
+        "add_label": "Add Product",
+        "list_key": "products",
+        "fields": [
+          {
+            "name": "productId",
+            "label": "Product",
+            "type": "dropdown",
+            "data_source": "PRODUCT_LIST",
+            "required": true,
+            "placeholder": "Select product..."
+          },
+          {
+            "name": "quantity",
+            "label": "Quantity",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 100"
+          },
+          {
+            "name": "price",
+            "label": "Price per Unit",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 50.00"
+          },
+          {
+            "name": "serviceType",
+            "label": "Service Type",
+            "type": "dropdown",
+            "options": [
+              "FOLDING",
+              "PACKAGING",
+              "RENTING",
+              "DRY_CLEANING",
+              "WASHING_IRONING",
+              "PRESSING",
+              "WASHING",
+              "WASHING_RENTING"
+            ],
+            "required": true,
+            "placeholder": "Select service type..."
+          },
+          {
+            "name": "remarks",
+            "label": "Remarks",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. White color only"
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "title": "Linen Configuration",
+      "layout": "full",
+      "description": "Update linen delivery and service configuration. Current values are pre-filled.",
+      "field_names": [
+        "deposit_amount",
+        "service_frequency",
+        "linen_delivery_days"
+      ],
+      "fetch_current_data": "GET_AGREEMENT",
+      "api": "UPDATE_AGREEMENT",
+      "form": {
+        "fields": [
+          {
+            "name": "deposit_amount",
+            "label": "Deposit Amount",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 50000.00"
+          },
+          {
+            "name": "service_frequency",
+            "label": "Service Frequency",
+            "type": "dropdown",
+            "options": [
+              "EVERY_DAY",
+              "ALTERNATE_DAY",
+              "EVERY_SUNDAY",
+              "CUSTOM"
+            ],
+            "required": false,
+            "placeholder": "Select frequency..."
+          },
+          {
+            "name": "linen_delivery_days",
+            "label": "Linen Delivery Days",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 3"
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "title": "Billing Configuration",
+      "layout": "full",
+      "description": "Update billing configuration. Current values are pre-filled.",
+      "field_names": [
+        "billing_type",
+        "credit_days",
+        "billing_cycle",
+        "billing_start_day",
+        "billing_end_day"
+      ],
+      "fetch_current_data": "GET_AGREEMENT",
+      "api": "UPDATE_AGREEMENT",
+      "form": {
+        "fields": [
+          {
+            "name": "billing_type",
+            "label": "Billing Type",
+            "type": "dropdown",
+            "options": [
+              "FLEXIBLE",
+              "FIXED"
+            ],
+            "required": false,
+            "placeholder": "Select billing type..."
+          },
+          {
+            "name": "credit_days",
+            "label": "Credit Days",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 15"
+          },
+          {
+            "name": "billing_cycle",
+            "label": "Billing Cycle (days)",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 30"
+          },
+          {
+            "name": "billing_start_day",
+            "label": "Billing Start Day",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 1"
+          },
+          {
+            "name": "billing_end_day",
+            "label": "Billing End Day",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 30"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "field_mappings": {
+    "ui_to_api": {
+      "products": "prices",
+      "product": "prices",
+      "contacts": "contactPersons",
+      "contact": "contactPersons",
+      "type": "agreement_type",
+      "startDate": "start_date",
+      "endDate": "end_date"
+    },
+    "api_to_ui": {
+      "prices": "products",
+      "contactPersons": "contacts",
+      "agreement_type": "type",
+      "start_date": "startDate",
+      "end_date": "endDate"
+    }
+  },
+  "flattening_config": {
+    "strategy": "deep",
+    "nested_containers": ["rentalDetails", "laundryDetails", "billingAddress", "shippingAddress", "leasingOrderDetails", "rentalOrderDetails", "washingOrderDetails"],
+    "array_mappings": {
+      "prices": "products"
+    },
+    "address_fields": {
+      "billingAddress": ["addressLine1", "addressLine2", "city", "state", "pincode", "country"],
+      "shippingAddress": ["addressLine1", "addressLine2", "city", "state", "pincode", "country"]
+    }
+  },
+  "global_config": {
+    "defaults": {
+      "minEntries": 1,
+      "maxEntries": 10
+    },
+    "camelCaseFields": [
+      "totalRooms",
+      "occupancyRate",
+      "depositAmount",
+      "creditDays",
+      "billingType",
+      "billingStartDay",
+      "billingEndDay",
+      "billingCycle",
+      "linenDeliveryDays",
+      "serviceFrequency",
+      "fixedMonthlyAmount",
+      "creditTermDays",
+      "gracePeriodDays",
+      "lateFeePerDay",
+      "damageFeePercentage",
+      "discountPercentage",
+      "securityDeposit",
+      "pickupFrequencyDays",
+      "deliveryTatDays",
+      "startDate",
+      "endDate"
+    ],
+    "workflowTypes": {
+      "create": ["hotel_onboarding", "generate_agreement", "create_laundry_agreement", "create_route"],
+      "update": ["update_hotel", "update_agreement", "assign_route_points"],
+      "delete": []
+    },
+    "specialFieldHandlers": {
+      "customer_id": {
+        "type": "customerLookup",
+        "behavior": "sessionTracking"
+      },
+      "route_id": {
+        "type": "routeLookup",
+        "behavior": "sessionTracking"
+      }
+    }
+  },
+  "schema_metadata": {
+    "agreement_types": {
+      "RENTAL": {
+        "nested_container": "rentalDetails",
+        "fields": ["totalRooms", "occupancyRate", "depositAmount", "creditDays", "billingType", "billingStartDay", "billingEndDay", "billingCycle", "linenDeliveryDays", "fixedMonthlyAmount", "serviceFrequency", "gracePeriodDays", "lateFeePerDay", "damageFeePercentage", "discountPercentage", "securityDeposit"]
+      },
+      "RENTAL_LAUNDRY": {
+        "nested_container": "rentalDetails",
+        "fields": ["totalRooms", "occupancyRate", "depositAmount", "creditDays", "billingType", "billingStartDay", "billingEndDay", "billingCycle", "linenDeliveryDays", "fixedMonthlyAmount", "serviceFrequency", "gracePeriodDays", "lateFeePerDay", "damageFeePercentage", "discountPercentage", "securityDeposit"]
+      },
+      "LAUNDRY": {
+        "nested_container": "laundryDetails",
+        "fields": ["totalRooms", "occupancyRate", "creditTermDays", "billingCycle", "billingType", "billingStartDay", "billingEndDay", "discountPercentage", "pickupFrequencyDays", "deliveryTatDays", "fixedMonthlyAmount"]
+      }
+    }
+  },
+  "session_tracking": {
+    "hotel_onboarding": {
+      "entity_type": "hotel",
+      "id_source": "result.id",
+      "name_source": "result.name",
+      "interaction_type": "created",
+      "track_in": ["created_hotels", "interacted_hotels"],
+      "last_created_key": "last_created_hotel"
+    },
+    "update_hotel": {
+      "entity_type": "hotel",
+      "id_source": "accumulated_data.customer_id",
+      "name_source": "result.name",
+      "interaction_type": "updated",
+      "track_in": ["interacted_hotels"]
+    },
+    "generate_agreement": {
+      "entity_type": "agreement",
+      "id_source": "result.id",
+      "customer_id_source": "accumulated_data.customer_id",
+      "interaction_type": "created",
+      "track_in": ["created_agreements"],
+      "last_created_key": "last_created_agreement",
+      "also_track_customer": {
+        "entity_type": "hotel",
+        "id_source": "accumulated_data.customer_id",
+        "name_source": "accumulated_data._hotel_name_map[accumulated_data.customer_id]",
+        "interaction_type": "viewed",
+        "track_in": ["interacted_hotels"]
+      }
+    },
+    "create_inventory_pool": {
+      "entity_type": "inventory_pool",
+      "id_source": "result.id",
+      "name_source": "result.name",
+      "interaction_type": "created",
+      "track_in": ["created_pools"],
+      "last_created_key": "last_created_pool"
+    },
+    "create_route": {
+      "entity_type": "route",
+      "id_source": "result.id",
+      "name_source": "accumulated_data.name",
+      "interaction_type": "created",
+      "track_in": ["created_routes"],
+      "last_created_key": "last_created_route"
+    },
+    "assign_route_points": {
+      "entity_type": "route",
+      "id_source": "accumulated_data.route_id",
+      "interaction_type": "updated",
+      "track_in": ["interacted_routes"]
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "onboarding": {
+    "name": "Hotel Onboarding",
+    "description": "Hotel creation, updates, agreements, and reservations",
+    "workflows": [
+      "hotel_onboarding",
+      "update_hotel",
+      "generate_agreement",
+      "update_agreement",
+      "create_inventory_reservation",
+      "update_inventory_reservation"
+    ],
+    "cross_workflow_flow": {
+      "after_hotel_onboarding": "generate_agreement",
+      "after_generate_agreement": null
+    },
+    "shared_data_keys": [
+      "customer_id",
+      "name",
+      "agreement_id"
+    ],
+    "form_behavior": {
+      "auto_skip": {
+        "enabled": true,
+        "skip_if_all_optional": true
+      },
+      "auto_advance_on_submit": {
+        "update_hotel": true
+      }
+    }
+  },
+  "orders": {
+    "name": "Orders Management",
+    "description": "Order creation, updates, and processing (pickup, delivery, fulfillment)",
+    "workflows": [
+      "create_order",
+      "update_order"
+    ],
+    "shared_data_keys": [
+      "customer_id",
+      "customerId",
+      "order_id",
+      "pool_id",
+      "reservation_id"
+    ],
+    "form_behavior": {
+      "auto_skip": {
+        "enabled": false,
+        "skip_if_all_optional": false
+      },
+      "auto_advance_on_submit": {
+        "update_order": true
+      }
+    }
+  },
+  "routes": {
+    "name": "Route Management",
+    "description": "Create and manage delivery routes with assigned points (customers/vendors)",
+    "workflows": [
+      "create_route",
+      "assign_route_points"
+    ],
+    "shared_data_keys": [
+      "route_id",
+      "customer_id",
+      "last_created_id"
+    ],
+    "form_behavior": {
+      "auto_skip": {
+        "enabled": false,
+        "skip_if_all_optional": false
+      }
+    }
+  }
+}

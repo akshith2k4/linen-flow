@@ -1,0 +1,51 @@
+{
+  "_metadata": {
+    "entity_type": "route",
+    "operation": "create",
+    "current_data_key": "current_route_data",
+    "workflowType": "create"
+  },
+  "name": "Create Route",
+  "description": "Create a new delivery route with a name and distribution center",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": false
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "title": "Route Details",
+      "layout": "compact",
+      "description": "Provide the route name and select the distribution center that will manage this route.",
+      "field_names": ["name", "dcId"],
+      "fetch_current_data": "GET_DCS",
+      "api": "CREATE_ROUTE",
+      "form": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Route Name",
+            "type": "text",
+            "required": true,
+            "placeholder": "e.g. City Center Route",
+            "validation": {
+              "required": "Route name is required",
+              "minLength": 2,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "dcId",
+            "label": "Distribution Center",
+            "type": "dropdown",
+            "data_source": "DC_LIST",
+            "options_source": "available_dcs",
+            "required": true,
+            "placeholder": "Select distribution center..."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "_metadata": {
+    "entity_type": "customer",
+    "operation": "update",
+    "current_data_key": "current_customer_data",
+    "workflowType": "update"
+  },
+  "name": "Update Hotel Details",
+  "description": "Update existing hotel/customer information including details, addresses, and contacts",
+  "formBehavior": {
+    "autoAdvanceOnSubmit": true,
+    "autoSkipBehavior": {
+      "enabled": false,
+      "skipIfAllOptional": false
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "title": "Select Customer to Update",
+      "layout": "compact",
+      "description": "Search and select the hotel/customer you want to update.",
+      "field_names": [
+        "customer_id"
+      ],
+      "form": {
+        "fields": [
+          {
+            "name": "customer_id",
+            "type": "lookup",
+            "label": "Search Customer to Update",
+            "data_source": "CUSTOMER_SEARCH",
+            "placeholder": "Type to search for a hotel...",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Basic Hotel Details",
+      "layout": "full",
+      "description": "Update basic hotel information. Current values are pre-filled.",
+      "field_names": [
+        "name",
+        "code",
+        "phone",
+        "email",
+        "type",
+        "status"
+      ],
+      "fetch_current_data": "GET_CUSTOMER",
+      "api": "UPDATE_CUSTOMER",
+      "form": {
+        "fields": [
+          {
+            "name": "name",
+            "label": "Hotel Name",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. The Grand Palace Hotel"
+          },
+          {
+            "name": "code",
+            "label": "Customer Code",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. GPH-001"
+          },
+          {
+            "name": "phone",
+            "label": "Phone Number",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. 9876543210"
+          },
+          {
+            "name": "email",
+            "label": "Email Address",
+            "type": "email",
+            "required": false,
+            "placeholder": "e.g. admin@grandpalace.com"
+          },
+          {
+            "name": "type",
+            "label": "Customer Type",
+            "type": "dropdown",
+            "options": [
+              "HOTEL",
+              "HOSPITAL",
+              "RESTAURANT",
+              "CORPORATE",
+              "OTHER"
+            ],
+            "required": false
+          },
+          {
+            "name": "status",
+            "label": "Status",
+            "type": "dropdown",
+            "options": [
+              "ACTIVE",
+              "INACTIVE"
+            ],
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "title": "Registration Information",
+      "layout": "full",
+      "description": "Update tax registration details. Current values are pre-filled.",
+      "field_names": [
+        "gstin",
+        "pan"
+      ],
+      "fetch_current_data": "GET_CUSTOMER",
+      "api": "UPDATE_CUSTOMER",
+      "form": {
+        "fields": [
+          {
+            "name": "gstin",
+            "label": "GSTIN Number",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. 29ABCDE1234F1ZH"
+          },
+          {
+            "name": "pan",
+            "label": "PAN Number",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. ABCDE1234F"
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "title": "Billing Address",
+      "layout": "full",
+      "description": "Update billing address. Current values are pre-filled.",
+      "field_names": [
+        "billingAddress.addressLine1",
+        "billingAddress.addressLine2",
+        "billingAddress.city",
+        "billingAddress.state",
+        "billingAddress.pincode",
+        "billingAddress.country"
+      ],
+      "fetch_current_data": "GET_CUSTOMER",
+      "api": "UPDATE_CUSTOMER",
+      "form": {
+        "fields": [
+          {
+            "name": "billingAddress.addressLine1",
+            "label": "Address Line 1",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. 123 MG Road"
+          },
+          {
+            "name": "billingAddress.addressLine2",
+            "label": "Address Line 2",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. Near City Center Mall"
+          },
+          {
+            "name": "billingAddress.city",
+            "label": "City",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. Bangalore"
+          },
+          {
+            "name": "billingAddress.state",
+            "label": "State",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. Karnataka"
+          },
+          {
+            "name": "billingAddress.pincode",
+            "label": "Pincode",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. 560001"
+          },
+          {
+            "name": "billingAddress.country",
+            "label": "Country",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. India"
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "title": "Shipping Address",
+      "layout": "full",
+      "description": "Update shipping address. Current values are pre-filled.",
+      "field_names": [
+        "shippingAddress.addressLine1",
+        "shippingAddress.addressLine2",
+        "shippingAddress.city",
+        "shippingAddress.state",
+        "shippingAddress.pincode",
+        "shippingAddress.country"
+      ],
+      "fetch_current_data": "GET_CUSTOMER",
+      "api": "UPDATE_CUSTOMER",
+      "form": {
+        "fields": [
+          {
+            "name": "shippingAddress.addressLine1",
+            "label": "Address Line 1",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. 456 Residency Road"
+          },
+          {
+            "name": "shippingAddress.addressLine2",
+            "label": "Address Line 2",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. Opp Central Park"
+          },
+          {
+            "name": "shippingAddress.city",
+            "label": "City",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. Bangalore"
+          },
+          {
+            "name": "shippingAddress.state",
+            "label": "State",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. Karnataka"
+          },
+          {
+            "name": "shippingAddress.pincode",
+            "label": "Pincode",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. 560025"
+          },
+          {
+            "name": "shippingAddress.country",
+            "label": "Country",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. India"
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "title": "Contact Persons",
+      "layout": "full",
+      "description": "Update contact persons. Current contacts are pre-filled.",
+      "field_names": [
+        "contactPersons"
+      ],
+      "fetch_current_data": "GET_CUSTOMER",
+      "api": "UPDATE_CUSTOMER",
+      "form": {
+        "multiple": true,
+        "min_entries": 1,
+        "add_label": "Add Contact",
+        "list_key": "contactPersons",
+        "fields": [
+          {
+            "name": "name",
+            "label": "Contact Name",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. Rajesh Kumar"
+          },
+          {
+            "name": "email",
+            "label": "Contact Email",
+            "type": "email",
+            "required": false,
+            "placeholder": "e.g. rajesh@grandpalace.com"
+          },
+          {
+            "name": "phone",
+            "label": "Contact Phone",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. 9876543211"
+          },
+          {
+            "name": "tag",
+            "label": "Role / Tag",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. Housekeeping Manager"
+          }
+        ]
+      }
+    }
+  ]
+}

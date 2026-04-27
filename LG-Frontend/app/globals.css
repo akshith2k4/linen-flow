@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-brand: 'Exo 2', sans-serif;
+  --font-mono: 'SF Mono', 'Consolas', monospace;
+  /* LinenGrass Design System Colors */
+
+  /* Primary (Brand Green) */
+  --color-primary: #1b5e20;
+  --color-primary-hover: #1b5e20;
+  --color-primary-active: #1b5e20;
+  --color-primary-bg: rgba(46, 125, 50, 0.08);
+
+  /* Sidebar */
+  --color-sidebar: #2e7d32;
+  --color-sidebar-hover: rgba(255, 255, 255, 0.1);
+  --color-sidebar-active: rgba(255, 255, 255, 0.85);
+  --color-sidebar-header: #1b5e20;
+
+  /* Neutrals */
+  --color-bg: #f5f5f5;
+  --color-surface: #f9fafb;
+  --color-border: #e5e7eb;
+
+  /* Text */
+  --color-text-heading: #111827;
+  --color-text-body: #4b5563;
+  --color-text-muted: #9ca3af;
+
+  /* Semantic */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #3b82f6;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-bg text-text-body font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-text-heading;
+  }
+}
+
+@layer utilities {
+  .hidden-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .hidden-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}

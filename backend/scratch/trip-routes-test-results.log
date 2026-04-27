@@ -1,0 +1,252 @@
+=== Trip Routes API Test Results ===
+Test started at: 2026-04-22T11:55:28.753Z
+
+========================================
+Starting Trip Routes API Tests
+========================================
+🌐 API URL: https://apidev.linengrass.com
+🔑 Token: eyJhbGciOiJIUzI1NiJ9...
+
+=== Test 1: Create Route ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes
+📦 Body: {"name":"Test Route 1776858928755","dcId":100000}
+📊 Status: 200
+📄 Response: {"id":103820,"name":"Test Route 1776858928755","points":[]}
+✓ Route created successfully:
+{
+  "id": 103820,
+  "name": "Test Route 1776858928755",
+  "points": []
+}
+
+⚠️  Attempting to assign points to route...
+
+=== Test 2: Assign Points to Route ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes/103820/assign-points
+📦 Body: {"routePoints":[{"partyId":105416,"partyType":"CUSTOMER"},{"partyId":100218,"partyType":"CUSTOMER"}]}
+📊 Status: 200
+📄 Response: {"id":103820,"name":"Test Route 1776858928755","points":[{"partyId":105416,"partyType":"CUSTOMER","name":"adhurs hotel","sequence":1},{"partyId":100218,"partyType":"CUSTOMER","name":"ARAMA SUITES","sequence":2}]}
+✓ Points assigned successfully:
+{
+  "id": 103820,
+  "name": "Test Route 1776858928755",
+  "points": [
+    {
+      "partyId": 105416,
+      "partyType": "CUSTOMER",
+      "name": "adhurs hotel",
+      "sequence": 1
+    },
+    {
+      "partyId": 100218,
+      "partyType": "CUSTOMER",
+      "name": "ARAMA SUITES",
+      "sequence": 2
+    }
+  ]
+}
+
+⚠️  Attempting to remove point from route...
+
+=== Test 3: Remove Points from Route ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes/103820/remove-points
+📦 Body: {"routePoints":[{"partyId":100218,"partyType":"CUSTOMER"}]}
+📊 Status: 200
+📄 Response: {"id":103820,"name":"Test Route 1776858928755","points":[{"partyId":105416,"partyType":"CUSTOMER","name":"adhurs hotel","sequence":1}]}
+✓ Point removed successfully:
+{
+  "id": 103820,
+  "name": "Test Route 1776858928755",
+  "points": [
+    {
+      "partyId": 105416,
+      "partyType": "CUSTOMER",
+      "name": "adhurs hotel",
+      "sequence": 1
+    }
+  ]
+}
+
+=== Test 4: List Routes ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes
+📊 Status: 200
+✓ Found 48 route(s):
+[
+  {
+    "id": 101000,
+    "name": "Idhey first route",
+    "points": [
+      {
+        "partyId": 101300,
+        "partyType": "CUSTOMER",
+        "name": "TEST HOTEL 1",
+        "sequence": 1
+      },
+      {
+        "partyId": 101301,
+        "partyType": "CUSTOMER",
+        "name": "TEST HOTEL 2",
+        "sequence": 2
+      },
+      {
+        "partyId": 100006,
+        "partyType": "CUSTOMER",
+        "name": "amangupta",
+        "sequence": 3
+      },
+      {
+        "partyId": 100000,
+        "partyType": "LAUNDRY_VENDOR",
+        "name": "Rose laundry",
+        "sequence": 4
+      }
+    ]
+  },
+  {
+    "id": 101001,
+    "name": "Idhi second route",
+    "points": [
+      {
+        "partyId": 101300,
+        "partyType": "CUSTOMER",
+        "name": "TEST HOTEL 1",
+        "sequence": 1
+      },
+      {
+        "partyId": 101301,
+        "partyType": "CUSTOMER",
+        "name": "TEST HOTEL 2",
+        "sequence": 2
+      },
+      {
+        "partyId": 100000,
+        "partyType": "LAUNDRY_VENDOR",
+        "name": "Rose laundry",
+        "sequence": 3
+      }
+    ]
+  },
+  {
+    "id": 101002,
+    "name": "Idhi 3rd route",
+    "points": [
+      {
+        "partyId": 100006,
+        "partyType": "CUSTOMER",
+        "name": "amangupta",
+        "sequence": 1
+      },
+      {
+        "partyId": 100217,
+        "partyType": "CUSTOMER",
+        "name": "ANNORA",
+        "sequence": 2
+      },
+      {
+        "partyId": 100218,
+        "partyType": "CUSTOMER",
+        "name": "ARAMA SUITES",
+        "sequence": 3
+      },
+      {
+        "partyId": 100219,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN - HSR",
+        "sequence": 4
+      },
+      {
+        "partyId": 100220,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN - MARATHALLI",
+        "sequence": 5
+      },
+      {
+        "partyId": 100221,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN-  SHIVAJINAGAR",
+        "sequence": 6
+      },
+      {
+        "partyId": 100224,
+        "partyType": "CUSTOMER",
+        "name": "AURUM KEY",
+        "sequence": 7
+      },
+      {
+        "partyId": 100225,
+        "partyType": "CUSTOMER",
+        "name": "AUTORI VARI HOSPITALITY PVT LTD - (LOCUL CENTRAL) (LOCUL MIDTOWN)",
+        "sequence": 8
+      },
+      {
+        "partyId": 100226,
+        "partyType": "CUSTOMER",
+        "name": "AVORA TREE SUITES",
+        "sequence": 9
+      },
+      {
+        "partyId": 100227,
+        "partyType": "CUSTOMER",
+        "name": "BLUE BLISS HOTELs",
+        "sequence": 10
+      },
+      {
+        "partyId": 100228,
+        "partyType": "CUSTOMER",
+        "name": "BOSCH LEARNING CAMPUS",
+        "sequence": 11
+      },
+      {
+        "partyId": 100649,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN HSR",
+        "sequence": 12
+      },
+      {
+        "partyId": 100757,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN MARATHALLI",
+        "sequence": 13
+      },
+  
+]
+
+⚠️  Attempting to create trip from route...
+
+=== Test 5: Create Trip from Route ===
+📍 URL: https://apidev.linengrass.com/api/trips/create-from-route
+📦 Body: {"routeName":"Test Route 1776858928755","deliveryDate":"2026-04-25","driverId":5,"vehicleId":10,"notes":"Morning delivery run","branchId":1,"dcId":100000,"assignedPeople":[{"userId":5,"role":"DRIVER"},{"userId":6,"role":"HELPER"}],"visitRequests":[{"customerId":105416,"orderIds":[1001,1002],"notes":"Call before arrival","sequence":1},{"customerId":100218,"orderIds":[1003],"notes":"Deliver to back entrance","sequence":2}]}
+📊 Status: 500
+📄 Response: {"status":500,"message":"Vehicle not found"}
+✗ Failed to create trip from route: API Error: 500 - {"status":500,"message":"Vehicle not found"}
+⚠️  Create trip from route returned 500 (server error) - skipping
+   This may be a backend issue
+
+=== Test 6: Delete Route ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes/103820
+📊 Status: 200
+📄 Response: Route deleted successfully
+✓ Route deleted successfully
+
+--- Test deleting non-existent route ---
+
+=== Test 6: Delete Route ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes/999999
+📊 Status: 404
+📄 Response: Route not found
+✗ Failed to delete route: API Error: 404 - Route not found
+✓ Correctly received 404 for non-existent route
+
+========================================
+✓ Tests completed!
+========================================
+
+📝 Summary:
+   ✓ Create route - Working
+   ✓ Assign points - Working
+   ✓ Remove points - Working
+   ✓ List routes - Working
+   ⚠️  Create trip from route - Vehicle not found (test data issue)
+   ✓ Delete route - Working
+
+=== Test completed at: 2026-04-22T11:55:30.535Z ===

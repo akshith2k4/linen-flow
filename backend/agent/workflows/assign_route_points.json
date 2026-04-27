@@ -1,0 +1,80 @@
+{
+  "_metadata": {
+    "entity_type": "route",
+    "operation": "update",
+    "current_data_key": "current_route_data",
+    "workflowType": "update"
+  },
+  "name": "Assign Points to Route",
+  "description": "Assign customers and vendors as stops on an existing delivery route",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": false
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "title": "Select Route",
+      "layout": "compact",
+      "description": "Choose the route you want to assign stops to.",
+      "field_names": ["route_id"],
+      "fetch_current_data": "GET_ROUTE",
+      "form": {
+        "fields": [
+          {
+            "name": "route_id",
+            "type": "lookup",
+            "label": "Select Route",
+            "data_source": "ROUTE_SEARCH",
+            "placeholder": "Search for a route...",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Add Stops",
+      "layout": "full",
+      "description": "Select the customers and vendors to assign as stops.",
+      "field_names": ["selectedStops"],
+      "fetch_current_data": ["GET_CUSTOMERS", "GET_VENDORS"],
+      "api": "ASSIGN_ROUTE_POINTS",
+      "form": {
+        "fields": [
+          {
+            "name": "selectedStops",
+            "label": "Select Stops",
+            "type": "dual_multi_select",
+            "required": true,
+            "sections": [
+              {
+                "key": "customers",
+                "label": "Customers / Hotels",
+                "options_source": "available_customers",
+                "value_key": "id",
+                "label_key": "name",
+                "partyType": "CUSTOMER",
+                "searchable": true,
+                "scrollable": true,
+                "placeholder": "Search hotels..."
+              },
+              {
+                "key": "vendors",
+                "label": "Laundry Vendors",
+                "options_source": "available_vendors",
+                "value_key": "id",
+                "label_key": "name",
+                "partyType": "LAUNDRY_VENDOR",
+                "searchable": true,
+                "scrollable": true,
+                "placeholder": "Search vendors..."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "_metadata": {
+    "entity_type": "reservation",
+    "operation": "create",
+    "current_data_key": "current_reservation_data",
+    "workflowType": "create"
+  },
+  "name": "Create Inventory Reservation",
+  "description": "Reserve inventory from a pool for a specific customer",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": true,
+      "skipIfAllOptional": true
+    }
+  },
+  "api": "CREATE_RESERVATION",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Select Customer",
+      "layout": "compact",
+      "description": "Choose the customer/hotel for this reservation",
+      "field_names": [
+        "customer_id"
+      ],
+      "form": {
+        "fields": [
+          {
+            "name": "customer_id",
+            "type": "lookup",
+            "label": "Search Customer / Hotel",
+            "data_source": "CUSTOMER_SEARCH",
+            "placeholder": "Type hotel name to search...",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Select Inventory Pool",
+      "layout": "compact",
+      "description": "Choose the inventory pool to reserve from",
+      "field_names": [
+        "poolId"
+      ],
+      "fetch_current_data": "GET_CUSTOMER",
+      "form": {
+        "fields": [
+          {
+            "name": "poolId",
+            "type": "dropdown",
+            "label": "Inventory Pool",
+            "data_source": "INVENTORY_POOLS",
+            "required": true,
+            "placeholder": "Select inventory pool..."
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "title": "Reservation Details",
+      "layout": "full",
+      "description": "Provide reservation type, dates, and check frequency",
+      "field_names": [
+        "reservationType",
+        "status",
+        "reservationDate",
+        "startDate",
+        "endDate",
+        "checkFrequency",
+        "notes"
+      ],
+      "field_aliases": {
+        "reservation type": "reservationType",
+        "reservation_type": "reservationType"
+      },
+      "fetch_current_data": "GET_POOLS",
+      "form": {
+        "fields": [
+          {
+            "name": "reservationType",
+            "label": "Reservation Type",
+            "type": "dropdown",
+            "options": [
+              "FIXED",
+              "ROTATIONAL"
+            ],
+            "required": true,
+            "placeholder": "Select type..."
+          },
+          {
+            "name": "status",
+            "label": "Status",
+            "type": "dropdown",
+            "options": [
+              "ACTIVE",
+              "INACTIVE",
+              "CANCELLED",
+              "COMPLETED"
+            ],
+            "required": true,
+            "defaultValue": "ACTIVE"
+          },
+          {
+            "name": "reservationDate",
+            "label": "Reservation Date",
+            "type": "datetime-local",
+            "required": true
+          },
+          {
+            "name": "startDate",
+            "label": "Start Date",
+            "type": "datetime-local",
+            "required": true
+          },
+          {
+            "name": "endDate",
+            "label": "End Date",
+            "type": "datetime-local",
+            "required": true
+          },
+          {
+            "name": "checkFrequency",
+            "label": "Check Frequency",
+            "type": "dropdown",
+            "options": [
+              "DAILY",
+              "ALTERNATE_DAYS",
+              "WEEKLY",
+              "MONTHLY",
+              "QUARTERLY"
+            ],
+            "required": true,
+            "placeholder": "Select frequency..."
+          },
+          {
+            "name": "notes",
+            "label": "Notes",
+            "type": "textarea",
+            "required": false,
+            "placeholder": "e.g. Initial linen allocation for hotel"
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "title": "Add Reservation Items",
+      "layout": "full",
+      "description": "Add products with allocation details. Only products from the selected inventory pool are available.",
+      "field_names": [
+        "items"
+      ],
+      "form": {
+        "multiple": true,
+        "min_entries": 1,
+        "add_label": "Add Item",
+        "list_key": "items",
+        "fields": [
+          {
+            "name": "productId",
+            "label": "Product",
+            "type": "dropdown",
+            "data_source": "POOL_PRODUCTS",
+            "required": true,
+            "placeholder": "Select a product from the pool..."
+          },
+          {
+            "name": "type",
+            "label": "Item Type",
+            "type": "dropdown",
+            "options": [
+              "FIXED",
+              "ROTATIONAL"
+            ],
+            "required": true,
+            "placeholder": "Select type..."
+          },
+          {
+            "name": "totalReservedQuantity",
+            "label": "Total Reserved Quantity",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 600"
+          },
+          {
+            "name": "quantityAllocatedWithCustomer",
+            "label": "Quantity with Customer",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 300"
+          },
+          {
+            "name": "quantityAllocatedWithDC",
+            "label": "Quantity with DC",
+            "type": "number",
+            "required": true,
+            "placeholder": "e.g. 300",
+            "compute": "totalReservedQuantity - quantityAllocatedWithCustomer"
+          },
+          {
+            "name": "remarks",
+            "label": "Remarks / Notes",
+            "type": "text",
+            "required": false,
+            "placeholder": "e.g. 2 par stock"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "_metadata": {
+    "entity_type": "order",
+    "operation": "create",
+    "current_data_key": "current_order_data",
+    "workflowType": "create"
+  },
+  "name": "Create New Order",
+  "description": "Create a new Wash, Rental, or Leasing order and add line items.",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": true,
+      "skipIfAllOptional": true
+    }
+  },
+  "api": "CREATE_ORDER",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Select Customer",
+      "layout": "compact",
+      "description": "Choose the customer for this order.",
+      "field_names": [
+        "customerId"
+      ],
+      "form": {
+        "fields": [
+          {
+            "name": "customerId",
+            "label": "Customer",
+            "type": "lookup",
+            "data_source": "CUSTOMER_SEARCH",
+            "required": true,
+            "placeholder": "Search customer..."
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Basic Order Information",
+      "layout": "full",
+      "description": "Define the type of order and basic details.",
+      "field_names": [
+        "orderType",
+        "orderDate",
+        "branchId",
+        "orderReferenceId"
+      ],
+      "form": {
+        "fields": [
+          {
+            "name": "orderType",
+            "label": "Order Type",
+            "type": "dropdown",
+            "options": [
+              {
+                "label": "Leasing",
+                "value": "LEASING"
+              }
+            ],
+            "required": true,
+            "placeholder": "Select order type..."
+          },
+          {
+            "name": "orderDate",
+            "label": "Order Date",
+            "type": "date",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "title": "Scheduling & Configuration",
+      "layout": "full",
+      "description": "Set the pickup and delivery dates, and specific configurations for leasing orders.",
+      "field_names": [
+        "leasingOrderType",
+        "pickupDate",
+        "deliveryDate",
+        "notes",
+        "isAdjustment"
+      ],
+      "form": {
+        "fields": [
+          {
+            "name": "leasingOrderType",
+            "label": "Delivery Type",
+            "type": "dropdown",
+            "options": [
+              {
+                "label": "Pickup Only",
+                "value": "PICKUP"
+              },
+              {
+                "label": "Delivery Only",
+                "value": "DELIVERY"
+              },
+              {
+                "label": "Both (Pickup & Delivery)",
+                "value": "BOTH"
+              }
+            ],
+            "required": false,
+            "placeholder": "Select delivery type...",
+            "conditional": {
+              "show_if": {
+                "field": "orderType",
+                "value": "LEASING"
+              }
+            }
+          },
+          {
+            "name": "pickupDate",
+            "label": "Pickup Date",
+            "type": "date",
+            "required": false,
+            "conditional": {
+              "show_if": {
+                "field": "orderType",
+                "value": "LEASING"
+              }
+            }
+          },
+          {
+            "name": "deliveryDate",
+            "label": "Delivery Date",
+            "type": "date",
+            "required": true
+          },
+          {
+            "name": "notes",
+            "label": "Order Notes",
+            "type": "textarea",
+            "required": false,
+            "placeholder": "Add any special instructions or notes..."
+          },
+          {
+            "name": "isAdjustment",
+            "label": "Is Adjustment Order?",
+            "type": "checkbox",
+            "default": false,
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "title": "Line Items",
+      "layout": "full",
+      "description": "Add products and quantities to this order. Products are loaded from the customer's inventory reservations.",
+      "field_names": [
+        "items"
+      ],
+      "fetch_current_data": "GET_RESERVED_PRODUCTS",
+      "form": {
+        "multiple": true,
+        "min_entries": 1,
+        "add_label": "Add Another Product",
+        "list_key": "items",
+        "fields": [
+          {
+            "name": "productId",
+            "label": "Product",
+            "type": "dropdown",
+            "options_source": "available_products",
+            "value_key": "id",
+            "label_key": "name",
+            "required": true,
+            "placeholder": "Select product from reservation...",
+            "on_select": {
+              "auto_fill": {
+                "productName": "selected.name",
+                "productCategory": "selected.category",
+                "unitPrice": "selected.price"
+              }
+            }
+          },
+          {
+            "name": "quantity",
+            "label": "Quantity",
+            "type": "number",
+            "required": true,
+            "min": 1,
+            "placeholder": "Enter quantity"
+          }
+        ]
+      }
+    }
+  ]
+}
