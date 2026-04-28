@@ -23,7 +23,9 @@ export type ApiId =
   | "ASSIGN_ROUTE_POINTS"
   | "GET_CUSTOMERS"
   | "GET_VENDORS"
-  | "GET_DCS";
+  | "GET_DCS"
+  | "CREATE_WASH_REQUEST"
+  | "CREATE_TRIP";
 
 export interface ApiContract {
   endpoint: string;
@@ -145,5 +147,15 @@ export const API_REGISTRY: Record<ApiId, ApiContract> = {
     method: "GET",
     headers: { ...COMMON_HEADERS },
     store_as: "available_dcs"
+  },
+  CREATE_WASH_REQUEST: {
+    endpoint: `${BASE_URL}/api/soiled-inventory/wash-requests`,
+    method: "POST",
+    headers: { ...COMMON_HEADERS }
+  },
+  CREATE_TRIP: {
+    endpoint: `${BASE_URL}/api/trips/create-from-route`,
+    method: "POST",
+    headers: { ...COMMON_HEADERS }
   }
 };

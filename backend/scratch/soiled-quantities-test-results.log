@@ -1,0 +1,57 @@
+=== Soiled Inventory Quantities API Test Results ===
+Test started at: 2026-04-28T04:46:45.476Z
+
+========================================
+Starting Soiled Inventory Quantities Tests
+========================================
+🌐 API URL: https://apidev.linengrass.com
+🔑 Token: eyJhbGciOiJIUzI1NiJ9...
+
+=== Test: Get Soiled Quantities ===
+Parameters: poolId=103657, vendorId=100000, deliveryDate=2026-04-28
+📍 URL: https://apidev.linengrass.com/api/soiled-inventory/soiled-quantities?poolId=103657&vendorId=100000&deliveryDate=2026-04-28
+
+📊 Status: 200
+📄 Response:
+✅ Soiled quantities retrieved successfully!
+[]
+
+=== Response Validation ===
+⚠️  No soiled items found for the given criteria
+   This could mean:
+   - No soiled inventory exists for this pool/vendor/date combination
+   - The poolId or vendorId doesn't exist
+   - The deliveryDate is outside the available range
+
+
+=== Test: Different Delivery Date ===
+📍 URL: https://apidev.linengrass.com/api/soiled-inventory/soiled-quantities?poolId=103657&vendorId=100000&deliveryDate=2026-04-29
+
+📊 Status: 200
+✅ Retrieved 0 soiled items for date 2026-04-29
+
+
+=== Test: Different Vendor ===
+📍 URL: https://apidev.linengrass.com/api/soiled-inventory/soiled-quantities?poolId=103657&vendorId=100001&deliveryDate=2026-04-28
+
+📊 Status: 200
+✅ Retrieved 0 soiled items for vendor 100001
+
+
+=== Test: Missing Parameters ===
+📍 URL: https://apidev.linengrass.com/api/soiled-inventory/soiled-quantities?poolId=103657&deliveryDate=2026-04-28 (missing vendorId)
+
+📊 Status: 500
+⚠️ API rejected request without vendorId (expected behavior)
+
+========================================
+✅ All tests completed successfully!
+========================================
+
+📝 Summary:
+   Total soiled items found (Test 1): 0
+
+⚠️  No soiled items found in Test 1
+   This is expected if there's no soiled inventory for the test parameters
+
+=== Tests completed at: 2026-04-28T04:46:45.916Z ===

@@ -62,6 +62,18 @@ export const WORKFLOW_TRANSITIONS: Record<string, {
       { label: "Create Another Route", workflow: "create_route" },
       { label: "Create Order", workflow: "create_order" },
     ]
+  },
+  create_wash_request: {
+    buttons: [
+      { label: "Create Another Wash Request", workflow: "create_wash_request" },
+      { label: "Create Order", workflow: "create_order" },
+    ]
+  },
+  create_trip: {
+    buttons: [
+      { label: "Create Another Trip", workflow: "create_trip" },
+      { label: "Create Order", workflow: "create_order" },
+    ]
   }
 };
 

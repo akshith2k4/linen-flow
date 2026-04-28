@@ -8,6 +8,8 @@ import { updateOrderHandler } from "./update_order";
 import { createInventoryReservationHandler } from "./create_inventory_reservation";
 import { createRouteHandler } from "./create_route";
 import { assignRoutePointsHandler } from "./assign_route_points";
+import { createWashRequestHandler } from "./create_wash_request";
+import { createTripHandler } from "./create_trip";
 
 export type { WorkflowHandler };
 
@@ -21,4 +23,6 @@ export const WORKFLOW_HANDLERS: Record<string, WorkflowHandler> = {
   update_order:                  updateOrderHandler,
   create_route:                  createRouteHandler,
   assign_route_points:           assignRoutePointsHandler,
+  create_wash_request:           createWashRequestHandler,
+  create_trip:                   createTripHandler,
 };

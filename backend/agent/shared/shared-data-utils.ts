@@ -25,6 +25,18 @@ const DOMAIN_ALLOWED_KEYS: Record<string, string[]> = {
     "route_id",
     "customer_id",
     "last_created_id"
+  ],
+  wash: [
+    "wash_request_id",
+    "dcId",
+    "laundryVendorId",
+    "poolId"
+  ],
+  trips: [
+    "trip_id",
+    "dcId",
+    "routeId",
+    "routeName"
   ]
 };
 
@@ -45,7 +57,7 @@ const DOMAIN_ALLOWED_KEYS: Record<string, string[]> = {
  */
 export function sanitizeSharedData(
   sharedData: Record<string, any>,
-  domain: "onboarding" | "orders" | "routes"
+  domain: "onboarding" | "orders" | "routes" | "wash" | "trips"
 ): Record<string, any> {
   const allowedKeys = DOMAIN_ALLOWED_KEYS[domain];
   if (!allowedKeys) {
@@ -85,6 +97,6 @@ export function sanitizeSharedData(
  * Gets the list of allowed shared data keys for a domain.
  * Useful for validation and testing.
  */
-export function getAllowedSharedDataKeys(domain: "onboarding" | "orders" | "routes"): string[] {
+export function getAllowedSharedDataKeys(domain: "onboarding" | "orders" | "routes" | "wash"): string[] {
   return DOMAIN_ALLOWED_KEYS[domain] || [];
 }

@@ -1,0 +1,140 @@
+{
+  "_metadata": {
+    "entity_type": "trips",
+    "operation": "create",
+    "current_data_key": "current_trip_data",
+    "workflowType": "create"
+  },
+  "name": "Create Trip",
+  "description": "Create a delivery/pickup trip from a route with vehicle and crew assignment",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": false
+    }
+  },
+  "api": "CREATE_TRIP",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Select Warehouse",
+      "layout": "compact",
+      "description": "Choose the distribution center for this trip.",
+      "field_names": ["dcId"],
+      "form": {
+        "fields": [
+          {
+            "name": "dcId",
+            "label": "Distribution Center",
+            "type": "dropdown",
+            "options": [
+              { "label": "Malleshwaram Warehouse - DC 001", "value": "100000" },
+              { "label": "Jp Nagar - DC 002", "value": "100001" }
+            ],
+            "required": true,
+            "placeholder": "Select warehouse..."
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Select Route",
+      "layout": "compact",
+      "description": "Choose the route for this trip. Customers and vendors on the route will be used to auto-generate visit requests.",
+      "field_names": ["routeId"],
+      "form": {
+        "fields": [
+          {
+            "name": "routeId",
+            "label": "Route",
+            "type": "dropdown",
+            "options_source": "available_routes",
+            "value_key": "id",
+            "label_key": "name",
+            "required": true,
+            "placeholder": "Select route..."
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "title": "Trip Details",
+      "layout": "full",
+      "description": "Set the delivery date, trip type, vehicle, and any notes.",
+      "field_names": ["deliveryDate", "tripType", "vehicleId", "notes"],
+      "form": {
+        "fields": [
+          {
+            "name": "deliveryDate",
+            "label": "Delivery Date",
+            "type": "date",
+            "required": true,
+            "placeholder": "YYYY-MM-DD"
+          },
+          {
+            "name": "tripType",
+            "label": "Trip Type",
+            "type": "dropdown",
+            "options": [
+              { "label": "Order Trip", "value": "ORDER_TRIP" },
+              { "label": "Customer Trip", "value": "CUSTOMER_TRIP" }
+            ],
+            "required": true,
+            "placeholder": "Select trip type..."
+          },
+          {
+            "name": "vehicleId",
+            "label": "Vehicle",
+            "type": "dropdown",
+            "options_source": "available_vehicles",
+            "value_key": "id",
+            "label_key": "vehicleNumber",
+            "required": true,
+            "placeholder": "Select vehicle..."
+          },
+          {
+            "name": "notes",
+            "label": "Notes",
+            "type": "textarea",
+            "required": false,
+            "placeholder": "e.g. Morning delivery run"
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "title": "Assign Crew",
+      "layout": "full",
+      "description": "Assign a driver and helper(s) for this trip. Visit requests will be auto-generated based on the selected route and delivery date.",
+      "field_names": ["assignedPeople"],
+      "form": {
+        "multiple": true,
+        "min_entries": 1,
+        "add_label": "Add Person",
+        "list_key": "assignedPeople",
+        "fields": [
+          {
+            "name": "userId",
+            "label": "Person",
+            "type": "dropdown",
+            "options_source": "available_users",
+            "value_key": "id",
+            "label_key": "name",
+            "required": true,
+            "placeholder": "Select person..."
+          },
+          {
+            "name": "role",
+            "label": "Role",
+            "type": "dropdown",
+            "options": ["DRIVER", "HELPER"],
+            "required": true,
+            "placeholder": "Select role..."
+          }
+        ]
+      }
+    }
+  ]
+}

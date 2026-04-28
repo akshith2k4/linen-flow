@@ -144,6 +144,18 @@ export const FIELD_DISPLAY_NAMES: Record<string, string> = {
   "billing_cycle": "billing cycle",
   "discount_percentage": "discount percentage",
   "fixed_monthly_amount": "fixed monthly amount",
+  "laundryVendorId": "laundry vendor",
+  "poolId": "inventory pool",
+  "washRequestType": "wash type",
+  "plannedWashTime": "planned wash time",
+  "washRequestRecordedDateTime": "recorded date/time",
+  "productSoiledItems": "products and soiled quantities",
+  "routeId": "route",
+  "deliveryDate": "delivery date",
+  "tripType": "trip type",
+  "vehicleId": "vehicle",
+  "assignedPeople": "assigned crew",
+  "notes": "notes",
 };
 
 export function getDisplayName(field: string): string {

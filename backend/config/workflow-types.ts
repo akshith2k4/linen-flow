@@ -24,6 +24,12 @@ export const WORKFLOW_TYPES: Record<string, WorkflowType> = {
   // Route workflows
   'create_route': 'create',
   'assign_route_points': 'update',
+
+  // Wash workflows
+  'create_wash_request': 'create',
+
+  // Trip workflows
+  'create_trip': 'create',
 };
 
 /**

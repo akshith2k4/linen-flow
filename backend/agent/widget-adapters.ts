@@ -41,6 +41,35 @@ function formatPickupFulfillment(data: any): Record<string, any> {
   return { ui_widget: "pickup_fulfillment", data: { fulfillment: data } };
 }
 
+// ── Wash Requests ─────────────────────────────────────────────────────────────
+function formatWashRequestList(data: any): Record<string, any> {
+  const requests = Array.isArray(data) ? data : (data.content || []);
+  return {
+    ui_widget: "wash_request_list",
+    data: {
+      title: "Wash Requests",
+      total_count: requests.length,
+      requests: requests.map((w: any) => ({
+        id: w.id,
+        requestNumber: w.requestNumber || "",
+        vendorName: w.laundryVendorName || "",
+        poolName: w.referenceName || "",
+        washType: w.washRequestType || "",
+        status: w.status || "",
+        plannedWashTime: w.plannedWashTime || "",
+        recordedDate: w.washRequestRecordedDate || "",
+        notes: w.notes || "",
+        products: (w.productSoiledItems || []).map((p: any) => ({
+          productName: p.productName || "",
+          soiledQty: p.soiledQuantity ?? 0,
+          washedQty: p.washedQuantity ?? 0,
+          heavySoiledQty: p.heavySoiledQuantity ?? 0,
+        })),
+      })),
+    },
+  };
+}
+
 // ── Hotels ────────────────────────────────────────────────────────────────────
 function formatEntityList(toolName: string, title: string, data: any, defaultSize: number, mapFn: (item: any) => any): Record<string, any> {
   const items = Array.isArray(data) ? data : (data.content || []);
@@ -124,11 +153,14 @@ export function formatToolResult(toolName: string, rawResult: string): Record<st
         (r) => ({ id: r.id, name: r.name || `Route #${r.id}`, subtext: `DC: ${r.dcId || "N/A"}` }));
 
     case toolName === "get_route_by_id":
-      return { message: `Route **${data.name || data.id}** loaded. It has ${data.routePoints?.length || 0} assigned stops.` };
+      return { message: `Route **${data.name || data.id}** loaded. It has ${data.points?.length || 0} assigned stops.` };
 
     case toolName === "list_vendors":
       return formatEntityList(toolName, "Vendors", data, 20,
         (v) => ({ id: v.id, name: v.name || "", subtext: v.code || "" }));
+
+    case toolName === "search_wash_requests":
+      return formatWashRequestList(data);
 
     default:
       return { message: JSON.stringify(data).substring(0, 300) };

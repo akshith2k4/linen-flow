@@ -15,7 +15,7 @@ import {
   getOrderById, listOrders, searchOrders, getOrdersByCustomer,
   getIncompleteOrdersByCustomer, getPickupFulfillmentForOrder,
   getProductById, listProducts, searchProducts,
-  listRoutes, getRouteById, listVendors,
+  listRoutes, getRouteById, listVendors, searchWashRequests,
 } from "./tools";
 
 // ── Tool execution map ────────────────────────────────────────────────────────
@@ -44,6 +44,7 @@ export const TOOL_MAP: Record<string, any> = {
   list_routes: listRoutes,
   get_route_by_id: getRouteById,
   list_vendors: listVendors,
+  search_wash_requests: searchWashRequests,
 };
 
 // ── Required params (code enforces, not LLM) ─────────────────────────────────
@@ -71,6 +72,7 @@ const REQUIRED_PARAMS: Record<string, string[]> = {
   list_products: [],
   list_routes: [],
   list_vendors: [],
+  search_wash_requests: [],
 };
 
 // ── Collection widget shown when required params are missing ──────────────────

@@ -61,6 +61,17 @@ const DOMAIN_CONFIGS: Record<string, DomainConfig> = {
     entityTrackingType: 'route',
     hydrationStrategy: 'custom',
     customFetchHandler: undefined // Will be set after import
+  },
+  wash: {
+    prerequisiteField: 'dcId',
+    entityTrackingType: 'route',
+    hydrationStrategy: 'conditional'
+  },
+  trips: {
+    prerequisiteField: 'dcId',
+    entityTrackingType: 'route',
+    hydrationStrategy: 'custom',
+    customFetchHandler: undefined // Will be set after import
   }
 };
 
@@ -117,6 +128,281 @@ async function fetchStepDataForRoutes(
 // Set the custom fetch handler for routes
 if (DOMAIN_CONFIGS.routes) {
   DOMAIN_CONFIGS.routes.customFetchHandler = fetchStepDataForRoutes;
+}
+
+/**
+ * Wash-specific: Fetch soiled quantities from the API and pre-fill productSoiledItems.
+ * Uses poolId + vendorId + deliveryDate (defaults to today).
+ */
+async function fetchStepDataForWash(
+  stepConfig: any,
+  currentData: any,
+  authToken: string | undefined
+): Promise<any> {
+  // Run generic fetch for standard fetch_current_data (GET_VENDORS, GET_POOLS, etc.)
+  let data = await fetchStepData(stepConfig, currentData, authToken);
+
+  // For Step 5 (productSoiledItems), auto-fetch soiled quantities
+  const hasProductField = stepConfig.field_names?.includes('productSoiledItems');
+  if (hasProductField && !data.productSoiledItems_defaults) {
+    const poolId = data.poolId;
+    const vendorId = data.laundryVendorId;
+    const deliveryDate = data.deliveryDate || new Date().toISOString().split('T')[0];
+
+    if (poolId && vendorId) {
+      try {
+        const baseUrl = process.env.EXTERNAL_API_URL || "https://apidev.linengrass.com";
+        const url = `${baseUrl}/api/soiled-inventory/soiled-quantities?poolId=${poolId}&vendorId=${vendorId}&deliveryDate=${deliveryDate}`;
+        console.log(`🔍 Fetching soiled quantities: ${url}`);
+
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            "Content-Type": "application/json",
+            "x-company-id": "1",
+          },
+        });
+
+        if (response.ok) {
+          const soiledData = await response.json();
+          const items = Array.isArray(soiledData) ? soiledData : [];
+          const productSoiledItems = items
+            .filter((item: any) => item.productId != null)
+            .map((item: any) => ({
+              productId: String(item.productId),
+              productName: item.productName || `Product ${item.productId}`,
+              soiledQuantity: item.soiledQuantity ?? 0,
+              heavySoiledQuantity: item.heavySoiledQuantity ?? 0,
+            }));
+
+          data = { ...data, productSoiledItems_defaults: productSoiledItems };
+          console.log(`✅ Auto-populated ${productSoiledItems.length} soiled items for pool ${poolId}, vendor ${vendorId}, date ${deliveryDate}`);
+        } else {
+          console.warn(`⚠️ Soiled quantities API returned ${response.status}`);
+        }
+      } catch (e) {
+        console.error(`❌ Failed to fetch soiled quantities:`, e);
+      }
+    } else {
+      console.warn(`⚠️ Missing poolId (${poolId}) or vendorId (${vendorId}) for soiled quantities fetch`);
+    }
+  }
+
+  return data;
+}
+
+// Set the custom fetch handler for wash
+if (DOMAIN_CONFIGS.wash) {
+  DOMAIN_CONFIGS.wash.customFetchHandler = fetchStepDataForWash;
+}
+
+/**
+ * Trips-specific: Fetch routes, vehicles, users, and auto-build visitRequests
+ * from scheduled-tasks/by-date based on route points + delivery date.
+ */
+async function fetchStepDataForTrips(
+  stepConfig: any,
+  currentData: any,
+  authToken: string | undefined
+): Promise<any> {
+  let data = await fetchStepData(stepConfig, currentData, authToken);
+
+  const baseUrl = process.env.EXTERNAL_API_URL || "https://apidev.linengrass.com";
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${authToken}`,
+    "Content-Type": "application/json",
+    "x-company-id": "1",
+  };
+
+  // ── Step 2: Fetch routes filtered by dcId ──
+  if (stepConfig.field_names?.includes('routeId') && !data.available_routes) {
+    const dcId = data.dcId;
+    if (dcId) {
+      try {
+        console.log(`🔍 [Trips] Fetching routes for dcId=${dcId}`);
+        const resp = await fetch(`${baseUrl}/api/trips/routes?dcId=${dcId}`, { headers });
+        if (resp.ok) {
+          const raw = await resp.json();
+          const routes = Array.isArray(raw) ? raw : (raw?.content || []);
+          data = { ...data, available_routes: routes };
+          console.log(`✅ [Trips] Loaded ${routes.length} routes`);
+        }
+      } catch (e) {
+        console.error(`❌ [Trips] Failed to fetch routes:`, e);
+      }
+    }
+  }
+
+  // ── Step 3: Fetch vehicles ──
+  if (stepConfig.field_names?.includes('vehicleId') && !data.available_vehicles) {
+    const dcId = data.dcId;
+    if (dcId) {
+      try {
+        console.log(`🔍 [Trips] Fetching vehicles for dcId=${dcId}`);
+        const resp = await fetch(`${baseUrl}/api/trips/vehicles/branch/1?dcId=${dcId}`, { headers });
+        if (resp.ok) {
+          const raw = await resp.json();
+          const vehicles = Array.isArray(raw) ? raw : (raw?.content || []);
+          data = { ...data, available_vehicles: vehicles };
+          console.log(`✅ [Trips] Loaded ${vehicles.length} vehicles`);
+        }
+      } catch (e) {
+        console.error(`❌ [Trips] Failed to fetch vehicles:`, e);
+      }
+    }
+  }
+
+  // ── Step 4: Fetch users, fetch route points, build visitRequests ──
+  if (stepConfig.field_names?.includes('assignedPeople')) {
+    // 4a. Fetch users for dropdown
+    if (!data.available_users) {
+      try {
+        console.log(`🔍 [Trips] Fetching active users`);
+        const resp = await fetch(`${baseUrl}/api/users/active?branchId=1`, { headers });
+        if (resp.ok) {
+          const raw = await resp.json();
+          const users = Array.isArray(raw) ? raw : (raw?.content || []);
+          data = { ...data, available_users: users };
+          console.log(`✅ [Trips] Loaded ${users.length} users`);
+        }
+      } catch (e) {
+        console.error(`❌ [Trips] Failed to fetch users:`, e);
+      }
+    }
+
+    // 4b. Always fetch fresh route points (don't rely on accumulated data)
+    let routePoints = data.route_points;
+    if ((!routePoints || routePoints.length === 0) && data.routeId && data.dcId) {
+      try {
+        console.log(`🔍 [Trips] Fetching route points for routeId=${data.routeId}, dcId=${data.dcId}`);
+        const resp = await fetch(`${baseUrl}/api/trips/routes?dcId=${data.dcId}`, { headers });
+        if (resp.ok) {
+          const raw = await resp.json();
+          const routes = Array.isArray(raw) ? raw : (raw?.content || []);
+          const selected = routes.find((r: any) => String(r.id) === String(data.routeId));
+          if (selected) {
+            // API returns 'points' not 'routePoints'
+            routePoints = selected.points || [];
+            data = { ...data, route_points: routePoints, routeName: selected.name || data.routeName || "" };
+            console.log(`✅ [Trips] Route "${selected.name}" has ${routePoints.length} points`);
+          }
+        }
+      } catch (e) {
+        console.error(`❌ [Trips] Failed to fetch route details:`, e);
+      }
+    }
+
+    // 4c. Auto-build visitRequests from scheduled-tasks
+    const deliveryDate = data.deliveryDate;
+    console.log(`🔍 [Trips] Visit request check: routePoints=${routePoints?.length || 0}, deliveryDate=${deliveryDate}, existing=${!!data.visitRequests}`);
+
+    if (!data.visitRequests && routePoints && routePoints.length > 0 && deliveryDate) {
+      const customerIds = routePoints
+        .filter((p: any) => p.partyType === "CUSTOMER")
+        .map((p: any) => p.partyId);
+      const vendorIds = routePoints
+        .filter((p: any) => p.partyType === "LAUNDRY_VENDOR" || p.partyType === "VENDOR")
+        .map((p: any) => p.partyId);
+
+      console.log(`🔍 [Trips] Extracted from route: ${customerIds.length} customers, ${vendorIds.length} vendors`);
+
+      if (customerIds.length > 0 || vendorIds.length > 0) {
+        try {
+          const requestBody = {
+            customerIds,
+            vendorIds,
+            date: deliveryDate,
+            dcId: Number(data.dcId),
+          };
+          console.log(`🔍 [Trips] Calling scheduled-tasks/by-date:`, JSON.stringify(requestBody));
+          
+          const resp = await fetch(`${baseUrl}/api/trips/scheduled-tasks/by-date`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify(requestBody),
+          });
+
+          if (resp.ok) {
+            const tasksRaw = await resp.json();
+            const tasksList: any[] = Array.isArray(tasksRaw) ? tasksRaw : [];
+            console.log(`🔍 [Trips] Received ${tasksList.length} tasks from scheduled-tasks`);
+            
+            const visitRequests = buildVisitRequestsFromTasks(tasksList, routePoints);
+            data = { ...data, visitRequests };
+            console.log(`✅ [Trips] Built ${visitRequests.length} visit requests`);
+            
+            if (visitRequests.length > 0) {
+              console.log(`✅ [Trips] Sample visit:`, JSON.stringify(visitRequests[0]));
+            }
+          } else {
+            console.warn(`⚠️ [Trips] Scheduled tasks API returned ${resp.status}`);
+          }
+        } catch (e) {
+          console.error(`❌ [Trips] Failed to fetch scheduled tasks:`, e);
+        }
+      } else {
+        console.log(`ℹ️ [Trips] No customers or vendors on route`);
+      }
+    } else if (!deliveryDate) {
+      console.warn(`⚠️ [Trips] No deliveryDate in accumulated data`);
+    } else if (!routePoints || routePoints.length === 0) {
+      console.warn(`⚠️ [Trips] No route points available`);
+    }
+  }
+
+  return data;
+}
+
+/**
+ * Groups scheduled tasks by partyId and builds visitRequests in route point order.
+ * Handles DELIVERY, PICKUP, and BOTH leasingOrderTypes.
+ */
+function buildVisitRequestsFromTasks(tasks: any[], routePoints: any[]): any[] {
+  const grouped = new Map<number, any[]>();
+  for (const task of tasks) {
+    const partyId = task.partyId;
+    if (!grouped.has(partyId)) grouped.set(partyId, []);
+    grouped.get(partyId)!.push(task);
+  }
+
+  console.log(`🔍 [Trips] Tasks grouped by party:`, Array.from(grouped.entries()).map(([id, t]) => `party ${id}: ${t.length} tasks`).join(', '));
+
+  const visitRequests: any[] = [];
+  let sequence = 1;
+
+  for (const point of routePoints) {
+    const partyTasks = grouped.get(point.partyId);
+    if (!partyTasks || partyTasks.length === 0) continue;
+
+    const items: any[] = [];
+    for (const task of partyTasks) {
+      const leasingType = task.originalDetails?.leasingOrderDetails?.leasingOrderType;
+      if (leasingType === "BOTH") {
+        items.push({ referenceId: task.taskId, referenceType: task.taskType, deliveryType: "DELIVERY" });
+        items.push({ referenceId: task.taskId, referenceType: task.taskType, deliveryType: "PICKUP" });
+      } else if (leasingType === "PICKUP") {
+        items.push({ referenceId: task.taskId, referenceType: task.taskType, deliveryType: "PICKUP" });
+      } else {
+        // Default to DELIVERY for DELIVERY type or unknown types
+        items.push({ referenceId: task.taskId, referenceType: task.taskType, deliveryType: "DELIVERY" });
+      }
+    }
+
+    visitRequests.push({
+      partyId: point.partyId,
+      partyType: point.partyType,
+      sequence: sequence++,
+      notes: "",
+      items,
+    });
+  }
+
+  return visitRequests;
+}
+
+// Set the custom fetch handler for trips
+if (DOMAIN_CONFIGS.trips) {
+  DOMAIN_CONFIGS.trips.customFetchHandler = fetchStepDataForTrips;
 }
 
 /**

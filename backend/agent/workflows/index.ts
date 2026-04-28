@@ -7,6 +7,8 @@ import create_order from "./create_order.json";
 import update_order from "./update_order.json";
 import assign_route_points from "./assign_route_points.json";
 import create_route from "./create_route.json";
+import create_wash_request from "./create_wash_request.json";
+import create_trip from "./create_trip.json";
 
 const workflows = {
   hotel_onboarding,
@@ -18,6 +20,8 @@ const workflows = {
   update_order,
   assign_route_points,
   create_route,
+  create_wash_request,
+  create_trip,
 };
 
 export default workflows;

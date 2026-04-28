@@ -31,9 +31,17 @@ export function buildAddress(data: any, prefix: string): AddressEntity {
 }
 
 export function toISODateTime(val: any): any {
-  if (typeof val === "string" && /^\d{4}-\d{2}-\d{2}$/.test(val)) {
-    return `${val}T00:00:00.000Z`;
-  }
+  if (typeof val !== "string") return val;
+  
+  // Already full ISO with seconds: "2026-04-27T10:00:00" or "2026-04-27T10:00:00.000Z"
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(val)) return val;
+  
+  // Date only: "2026-04-27" → append midnight
+  if (/^\d{4}-\d{2}-\d{2}$/.test(val)) return `${val}T00:00:00.000Z`;
+  
+  // datetime-local from HTML input: "2026-04-27T23:32" → append ":00"
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(val)) return `${val}:00`;
+  
   return val;
 }
 

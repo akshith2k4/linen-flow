@@ -329,3 +329,27 @@ export const listVendors = tool(async ({ name, page, size }) => {
     size: z.number().default(100).describe("Page size"),
   }),
 });
+
+export const searchWashRequests = tool(async ({ startTime, endTime, filterType, dcId, vendorId, status, washRequestType }) => {
+  return apiClient.fetchAsStringPost('/soiled-inventory/wash-requests/search', {
+    startTime,
+    endTime,
+    filterType,
+    dcId,
+    vendorId,
+    status,
+    washRequestType,
+  });
+}, {
+  name: "search_wash_requests",
+  description: "Search wash requests by date range and optional filters like vendor, DC, status, and wash type",
+  schema: z.object({
+    startTime: z.string().describe("Start date (YYYY-MM-DD)"),
+    endTime: z.string().describe("End date (YYYY-MM-DD)"),
+    filterType: z.enum(['CREATED_TIME', 'PLANNED_WASH_TIME', 'ACTUAL_WASH_TIME']).default('CREATED_TIME').describe("Which date field to filter on"),
+    dcId: z.number().optional().describe("Filter by distribution center ID"),
+    vendorId: z.number().optional().describe("Filter by laundry vendor ID"),
+    status: z.enum(['PENDING', 'ASSIGNED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED', 'FAILED']).optional().describe("Filter by wash request status"),
+    washRequestType: z.enum(['WASH', 'RE_WASH']).optional().describe("Filter by wash request type"),
+  }),
+});

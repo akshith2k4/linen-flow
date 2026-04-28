@@ -1,0 +1,166 @@
+{
+  "_metadata": {
+    "entity_type": "wash",
+    "operation": "create",
+    "current_data_key": "current_wash_request_data",
+    "workflowType": "create"
+  },
+  "name": "Create Wash Request",
+  "description": "Create a new wash request to send soiled linen to a laundry vendor for washing",
+  "formBehavior": {
+    "autoSkipBehavior": {
+      "enabled": false
+    }
+  },
+  "api": "CREATE_WASH_REQUEST",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Select Warehouse",
+      "layout": "compact",
+      "description": "Choose the distribution center for this wash request.",
+      "field_names": ["dcId"],
+      "form": {
+        "fields": [
+          {
+            "name": "dcId",
+            "label": "Distribution Center",
+            "type": "dropdown",
+            "options": [
+              { "label": "Malleshwaram Warehouse - DC 001", "value": "100000" },
+              { "label": "Jp Nagar - DC 002", "value": "100001" }
+            ],
+            "required": true,
+            "placeholder": "Select warehouse..."
+          }
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "title": "Select Vendor",
+      "layout": "compact",
+      "description": "Choose the laundry vendor who will handle the washing.",
+      "field_names": ["laundryVendorId"],
+      "fetch_current_data": "GET_VENDORS",
+      "form": {
+        "fields": [
+          {
+            "name": "laundryVendorId",
+            "label": "Laundry Vendor",
+            "type": "dropdown",
+            "options_source": "available_vendors",
+            "value_key": "id",
+            "label_key": "name",
+            "required": true,
+            "placeholder": "Select vendor..."
+          }
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "title": "Select Inventory Pool",
+      "layout": "compact",
+      "description": "Choose the inventory pool that has soiled items to wash.",
+      "field_names": ["poolId"],
+      "fetch_current_data": "GET_POOLS",
+      "form": {
+        "fields": [
+          {
+            "name": "poolId",
+            "label": "Inventory Pool",
+            "type": "dropdown",
+            "data_source": "INVENTORY_POOLS",
+            "required": true,
+            "placeholder": "Select pool..."
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "title": "Wash Details",
+      "layout": "full",
+      "description": "Configure the wash type, delivery date, and any notes.",
+      "field_names": ["washRequestType", "deliveryDate", "washRequestRecordedDateTime", "notes"],
+      "form": {
+        "fields": [
+          {
+            "name": "washRequestType",
+            "label": "Wash Type",
+            "type": "dropdown",
+            "options": ["WASH", "RE_WASH"],
+            "required": true,
+            "defaultValue": "WASH",
+            "placeholder": "Select wash type..."
+          },
+          {
+            "name": "deliveryDate",
+            "label": "Delivery Date",
+            "type": "date",
+            "required": true,
+            "placeholder": "YYYY-MM-DD (defaults to today — used to look up soiled quantities)"
+          },
+          {
+            "name": "washRequestRecordedDateTime",
+            "label": "Request Recorded Date/Time",
+            "type": "datetime-local",
+            "required": true,
+            "placeholder": "Defaults to current time if left empty"
+          },
+          {
+            "name": "notes",
+            "label": "Notes",
+            "type": "textarea",
+            "required": false,
+            "placeholder": "e.g. Regular weekly wash for soiled linen"
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "title": "Review Soiled Items",
+      "layout": "full",
+      "description": "Soiled quantities are auto-fetched from the system based on your selections. Review and adjust quantities before submitting. You can submit with no items if nothing needs washing.",
+      "field_names": ["productSoiledItems"],
+      "form": {
+        "multiple": true,
+        "min_entries": 0,
+        "add_label": "Add Item",
+        "list_key": "productSoiledItems",
+        "fields": [
+          {
+            "name": "productId",
+            "label": "Product",
+            "type": "text",
+            "readonly": true,
+            "required": false
+          },
+          {
+            "name": "productName",
+            "label": "Product Name",
+            "type": "text",
+            "readonly": true,
+            "required": false
+          },
+          {
+            "name": "soiledQuantity",
+            "label": "Soiled Quantity",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 20"
+          },
+          {
+            "name": "heavySoiledQuantity",
+            "label": "Heavy Soiled Quantity",
+            "type": "number",
+            "required": false,
+            "placeholder": "e.g. 3"
+          }
+        ]
+      }
+    }
+  ]
+}

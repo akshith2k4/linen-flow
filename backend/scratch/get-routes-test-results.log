@@ -1,0 +1,776 @@
+=== Routes API Test Results ===
+Test started at: 2026-04-28T04:15:30.341Z
+
+========================================
+Starting Routes API Tests
+========================================
+🌐 API URL: https://apidev.linengrass.com
+🔑 Token: eyJhbGciOiJIUzI1NiJ9...
+
+=== Test: Get Routes for dcId=100000 ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes?dcId=100000
+
+📊 Status: 200
+📄 Response:
+✅ Routes retrieved successfully!
+[
+  {
+    "id": 101000,
+    "name": "Idhey first route",
+    "points": [
+      {
+        "partyId": 101300,
+        "partyType": "CUSTOMER",
+        "name": "TEST HOTEL 1",
+        "sequence": 1
+      },
+      {
+        "partyId": 101301,
+        "partyType": "CUSTOMER",
+        "name": "TEST HOTEL 2",
+        "sequence": 2
+      },
+      {
+        "partyId": 100006,
+        "partyType": "CUSTOMER",
+        "name": "amangupta",
+        "sequence": 3
+      },
+      {
+        "partyId": 100000,
+        "partyType": "LAUNDRY_VENDOR",
+        "name": "Rose laundry",
+        "sequence": 4
+      }
+    ]
+  },
+  {
+    "id": 101001,
+    "name": "Idhi second route",
+    "points": [
+      {
+        "partyId": 101300,
+        "partyType": "CUSTOMER",
+        "name": "TEST HOTEL 1",
+        "sequence": 1
+      },
+      {
+        "partyId": 101301,
+        "partyType": "CUSTOMER",
+        "name": "TEST HOTEL 2",
+        "sequence": 2
+      },
+      {
+        "partyId": 100000,
+        "partyType": "LAUNDRY_VENDOR",
+        "name": "Rose laundry",
+        "sequence": 3
+      }
+    ]
+  },
+  {
+    "id": 101002,
+    "name": "Idhi 3rd route",
+    "points": [
+      {
+        "partyId": 100006,
+        "partyType": "CUSTOMER",
+        "name": "amangupta",
+        "sequence": 1
+      },
+      {
+        "partyId": 100217,
+        "partyType": "CUSTOMER",
+        "name": "ANNORA",
+        "sequence": 2
+      },
+      {
+        "partyId": 100218,
+        "partyType": "CUSTOMER",
+        "name": "ARAMA SUITES",
+        "sequence": 3
+      },
+      {
+        "partyId": 100219,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN - HSR",
+        "sequence": 4
+      },
+      {
+        "partyId": 100220,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN - MARATHALLI",
+        "sequence": 5
+      },
+      {
+        "partyId": 100221,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN-  SHIVAJINAGAR",
+        "sequence": 6
+      },
+      {
+        "partyId": 100224,
+        "partyType": "CUSTOMER",
+        "name": "AURUM KEY",
+        "sequence": 7
+      },
+      {
+        "partyId": 100225,
+        "partyType": "CUSTOMER",
+        "name": "AUTORI VARI HOSPITALITY PVT LTD - (LOCUL CENTRAL) (LOCUL MIDTOWN)",
+        "sequence": 8
+      },
+      {
+        "partyId": 100226,
+        "partyType": "CUSTOMER",
+        "name": "AVORA TREE SUITES",
+        "sequence": 9
+      },
+      {
+        "partyId": 100227,
+        "partyType": "CUSTOMER",
+        "name": "BLUE BLISS HOTELs",
+        "sequence": 10
+      },
+      {
+        "partyId": 100228,
+        "partyType": "CUSTOMER",
+        "name": "BOSCH LEARNING CAMPUS",
+        "sequence": 11
+      },
+      {
+        "partyId": 100649,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN HSR",
+        "sequence": 12
+      },
+      {
+        "partyId": 100757,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN MARATHALLI",
+        "sequence": 13
+      },
+      {
+        "partyId": 100758,
+        "partyType": "CUSTOMER",
+        "name": "ATHASRI INN SHIVAJINAGAR",
+        "sequence": 14
+      },
+      {
+        "partyId": 101299,
+        "partyType": "CUSTOMER",
+        "name": "ANMOL KL",
+        "sequence": 15
+      },
+      {
+        "partyId": 100217,
+        "partyType": "CUSTOMER",
+        "name": "ANNORA",
+        "sequence": 1
+      },
+      {
+        "partyId": 101299,
+        "partyType": "CUSTOMER",
+        "name": "ANMOL KL",
+        "sequence": 2
+      },
+      {
+        "partyId": 100006,
+        "partyType": "CUSTOMER",
+        "name": "amangupta",
+        "sequence": 1
+      },
+      {
+        "partyId": 100217,
+        "partyType": "CUSTOMER",
+        "name": "ANNORA",
+        "sequence": 2
+      },
+      {
+        "partyId": 100261,
+        "partyType": "CUSTOMER",
+        "name": "RAJ RESIDENCY",
+        "sequence": 20
+      }
+    ]
+  },
+  {
+    "id": 101101,
+    "name": "Idhi 4th Route",
+    "points": [
+      {
+        "partyId": 100270,
+        "partyType": "CUSTOMER",
+        "name": null,
+        "sequence": 1
+      },
+      {
+        "partyId": 100325,
+        "partyType": "CUSTOMER",
+        "name": "RFID",
+        "sequence": 2
+      },
+      {
+        "partyId": 101189,
+        "partyType": "CUSTOMER",
+        "name": "Suits 42",
+        "sequence": 3
+      }
+    ]
+  },
+  {
+    "id": 101201,
+    "name": "0111",
+    "points": [
+      {
+        "partyId": 100226,
+        "partyType": "CUSTOMER",
+        "name": "AVORA TREE SUITES",
+        "sequence": 1
+      },
+      {
+        "partyId": 100227,
+        "partyType": "CUSTOMER",
+        "name": "BLUE BLISS HOTELs",
+        "sequence": 2
+      },
+      {
+        "partyId": 100228,
+        "partyType": "CUSTOMER",
+        "name": "BOSCH LEARNING CAMPUS",
+        "sequence": 3
+      },
+      {
+        "partyId": 100229,
+        "partyType": "CUSTOMER",
+        "name": "BUBBLE BY UNIWORLD",
+        "sequence": 4
+      },
+      {
+        "partyId": 100230,
+        "partyType": "CUSTOMER",
+        "name": "CITY KEYS ",
+        "sequence": 5
+      },
+      {
+        "partyId": 100231,
+        "partyType": "CUSTOMER",
+        "name": "CLOVER A RIVIDO HOTELS",
+        "sequence": 6
+      },
+      {
+        "partyId": 100232,
+        "partyType": "CUSTOMER",
+        "name": "COUNTRY INN",
+        "sequence": 7
+      }
+    ]
+  },
+  {
+    "id": 101301,
+    "name": "Idhi naa routeuu",
+    "points": [
+      {
+        "partyId": 100006,
+        "partyType": "CUSTOMER",
+        "name": "amangupta",
+        "sequence": 1
+      },
+      {
+        "partyId": 100217,
+        "partyType": "CUSTOMER",
+        "name": "ANNORA",
+        "sequence": 2
+      },
+      {
+        "partyId": 100224,
+        "partyType": "CUSTOMER",
+        "name": "AURUM KEY",
+        "sequence": 3
+      },
+      {
+        "partyId": 100231,
+        "partyType": "CUSTOMER",
+        "name": "CLOVER A RIVIDO HOTELS",
+        "sequence": 4
+      },
+      {
+        "partyId": 100233,
+        "partyType": "CUSTOMER",
+        "name": "DAY SUITES",
+        "sequence": 5
+      },
+      {
+        "partyId": 101299,
+        "partyType": "CUSTOMER",
+        "name": "ANMOL KL",
+        "sequence": 6
+      }
+    ]
+  },
+  {
+    "id": 101401,
+    "name": "RFID",
+    "points": [
+      {
+        "partyId": 100325,
+        "partyType": "CUSTOMER",
+        "name": "RFID",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 101501,
+    "name": "SUITS 42",
+    "points": [
+      {
+        "partyId": 100325,
+        "partyType": "CUSTOMER",
+        "name": "RFID",
+        "sequence": 1
+      },
+      {
+        "partyId": 101189,
+        "partyType": "CUSTOMER",
+        "name": "Suits 42",
+        "sequence": 2
+      }
+    ]
+  },
+  {
+    "id": 101502,
+    "name": "RFID & KL",
+    "points": [
+      {
+        "partyId": 100325,
+        "partyType": "CUSTOMER",
+        "name": "RFID",
+        "sequence": 1
+      },
+      {
+        "partyId": 101299,
+        "partyType": "CUSTOMER",
+        "name": "ANMOL KL",
+        "sequence": 2
+      }
+    ]
+  },
+  {
+    "id": 101503,
+    "name": "shabari Route",
+    "points": [
+      {
+        "partyId": 100218,
+        "partyType": "CUSTOMER",
+        "name": "ARAMA SUITES",
+        "sequence": 1
+      },
+      {
+        "partyId": 100261,
+        "partyType": "CUSTOMER",
+        "name": "RAJ RESIDENCY",
+        "sequence": 2
+      }
+    ]
+  },
+  {
+    "id": 101504,
+    "name": "Wash Route",
+    "points": [
+      {
+        "partyId": 101405,
+        "partyType": "CUSTOMER",
+        "name": "Wash request 1",
+        "sequence": 1
+      },
+      {
+        "partyId": 101406,
+        "partyType": "CUSTOMER",
+        "name": "Wash request 2",
+        "sequence": 2
+      }
+    ]
+  },
+  {
+    "id": 101601,
+    "name": "kotha route",
+    "points": [
+      {
+        "partyId": 100325,
+        "partyType": "CUSTOMER",
+        "name": "RFID",
+        "sequence": 1
+      },
+      {
+        "partyId": 101189,
+        "partyType": "CUSTOMER",
+        "name": "Suits 42",
+        "sequence": 2
+      }
+    ]
+  },
+  {
+    "id": 101901,
+    "name": "nishant test",
+    "points": []
+  },
+  {
+    "id": 102101,
+    "name": "Rohit Route",
+    "points": [
+      {
+        "partyId": 102702,
+        "partyType": "CUSTOMER",
+        "name": "Hotel Rohit",
+        "sequence": 1
+      },
+      {
+        "partyId": 102809,
+        "partyType": "CUSTOMER",
+        "name": "Hotel Rohit 2",
+        "sequence": 2
+      },
+      {
+        "partyId": 103241,
+        "partyType": "CUSTOMER",
+        "name": "Hotel Rohit 4",
+        "sequence": 3
+      }
+    ]
+  },
+  {
+    "id": 102201,
+    "name": "Rohit Route 3",
+    "points": [
+      {
+        "partyId": 103025,
+        "partyType": "CUSTOMER",
+        "name": "Hotel Rohit 3",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 102301,
+    "name": "shabari RFID route",
+    "points": [
+      {
+        "partyId": 103133,
+        "partyType": "CUSTOMER",
+        "name": "Shabari RFID test",
+        "sequence": 1
+      },
+      {
+        "partyId": 103349,
+        "partyType": "CUSTOMER",
+        "name": "Shabari RFIDv2",
+        "sequence": 2
+      }
+    ]
+  },
+  {
+    "id": 102401,
+    "name": "KIRAN",
+    "points": [
+      {
+        "partyId": 102162,
+        "partyType": "CUSTOMER",
+        "name": "Kiran_castle",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 102501,
+    "name": "ORANGE",
+    "points": [
+      {
+        "partyId": 103565,
+        "partyType": "CUSTOMER",
+        "name": "Orange Hotel",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 102601,
+    "name": "Jyotsna",
+    "points": [
+      {
+        "partyId": 103673,
+        "partyType": "CUSTOMER",
+        "name": "Jyotsna",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 102701,
+    "name": "Lakshmi",
+    "points": [
+      {
+        "partyId": 103783,
+        "partyType": "CUSTOMER",
+        "name": "Lakshmi",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 102801,
+    "name": "Kanchayni",
+    "points": [
+      {
+        "partyId": 103889,
+        "partyType": "CUSTOMER",
+        "name": "Kanchayani",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 102901,
+    "name": "rambabu",
+    "points": [
+      {
+        "partyId": 103997,
+        "partyType": "CUSTOMER",
+        "name": "Rambabu",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 102902,
+    "name": "Mixedroute",
+    "points": [
+      {
+        "partyId": 103998,
+        "partyType": "CUSTOMER",
+        "name": "Mixed",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103001,
+    "name": "Rohit 5",
+    "points": [
+      {
+        "partyId": 104105,
+        "partyType": "CUSTOMER",
+        "name": "Hotel Rohit 5",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103101,
+    "name": "Final",
+    "points": [
+      {
+        "partyId": 104213,
+        "partyType": "CUSTOMER",
+        "name": "Final Hotel",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103201,
+    "name": "Sachin",
+    "points": [
+      {
+        "partyId": 104321,
+        "partyType": "CUSTOMER",
+        "name": "Sachin",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103402,
+    "name": "aman",
+    "points": [
+      {
+        "partyId": 100006,
+        "partyType": "CUSTOMER",
+        "name": "amangupta",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103501,
+    "name": "Rose Laundry",
+    "points": [
+      {
+        "partyId": 100000,
+        "partyType": "LAUNDRY_VENDOR",
+        "name": "Rose laundry",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103601,
+    "name": "charan",
+    "points": [
+      {
+        "partyId": 105947,
+        "partyType": "CUSTOMER",
+        "name": "charan",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103701,
+    "name": "TCH TRAINING",
+    "points": [
+      {
+        "partyId": 106700,
+        "partyType": "CUSTOMER",
+        "name": "TCH",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103824,
+    "name": "akshith",
+    "points": [
+      {
+        "partyId": 106924,
+        "partyType": "CUSTOMER",
+        "name": "akshith",
+        "sequence": 1
+      },
+      {
+        "partyId": 100000,
+        "partyType": "LAUNDRY_VENDOR",
+        "name": "Rose laundry",
+        "sequence": 2
+      },
+      {
+        "partyId": 100224,
+        "partyType": "CUSTOMER",
+        "name": "AURUM KEY",
+        "sequence": 3
+      },
+      {
+        "partyId": 101299,
+        "partyType": "CUSTOMER",
+        "name": "ANMOL KL",
+        "sequence": 4
+      },
+      {
+        "partyId": 100301,
+        "partyType": "LAUNDRY_VENDOR",
+        "name": "akshi",
+        "sequence": 5
+      }
+    ]
+  },
+  {
+    "id": 103828,
+    "name": "arama",
+    "points": [
+      {
+        "partyId": 100218,
+        "partyType": "CUSTOMER",
+        "name": "ARAMA SUITES",
+        "sequence": 1
+      }
+    ]
+  },
+  {
+    "id": 103829,
+    "name": "mad",
+    "points": [
+      {
+        "partyId": 106963,
+        "partyType": "CUSTOMER",
+        "name": "dam",
+        "sequence": 1
+      }
+    ]
+  }
+]
+
+=== Response Validation ===
+✓ Found 33 routes
+
+=== First Route Structure ===
+✓ id: 101000
+✓ name: Idhey first route
+✗ dcId: undefined
+✗ routePoints: Array(0)
+✗ status: undefined
+✗ description: (empty)
+
+⚠️  Route has no routePoints array or it's empty
+
+=== All Routes Summary ===
+✗ Route 1: "Idhey first route" (id: 101000) - 0 points
+✗ Route 2: "Idhi second route" (id: 101001) - 0 points
+✗ Route 3: "Idhi 3rd route" (id: 101002) - 0 points
+✗ Route 4: "Idhi 4th Route" (id: 101101) - 0 points
+✗ Route 5: "0111" (id: 101201) - 0 points
+✗ Route 6: "Idhi naa routeuu" (id: 101301) - 0 points
+✗ Route 7: "RFID" (id: 101401) - 0 points
+✗ Route 8: "SUITS 42" (id: 101501) - 0 points
+✗ Route 9: "RFID & KL" (id: 101502) - 0 points
+✗ Route 10: "shabari Route" (id: 101503) - 0 points
+✗ Route 11: "Wash Route" (id: 101504) - 0 points
+✗ Route 12: "kotha route" (id: 101601) - 0 points
+✗ Route 13: "nishant test" (id: 101901) - 0 points
+✗ Route 14: "Rohit Route" (id: 102101) - 0 points
+✗ Route 15: "Rohit Route 3" (id: 102201) - 0 points
+✗ Route 16: "shabari RFID route" (id: 102301) - 0 points
+✗ Route 17: "KIRAN" (id: 102401) - 0 points
+✗ Route 18: "ORANGE" (id: 102501) - 0 points
+✗ Route 19: "Jyotsna" (id: 102601) - 0 points
+✗ Route 20: "Lakshmi" (id: 102701) - 0 points
+✗ Route 21: "Kanchayni" (id: 102801) - 0 points
+✗ Route 22: "rambabu" (id: 102901) - 0 points
+✗ Route 23: "Mixedroute" (id: 102902) - 0 points
+✗ Route 24: "Rohit 5" (id: 103001) - 0 points
+✗ Route 25: "Final" (id: 103101) - 0 points
+✗ Route 26: "Sachin" (id: 103201) - 0 points
+✗ Route 27: "aman" (id: 103402) - 0 points
+✗ Route 28: "Rose Laundry" (id: 103501) - 0 points
+✗ Route 29: "charan" (id: 103601) - 0 points
+✗ Route 30: "TCH TRAINING" (id: 103701) - 0 points
+✗ Route 31: "akshith" (id: 103824) - 0 points
+✗ Route 32: "arama" (id: 103828) - 0 points
+✗ Route 33: "mad" (id: 103829) - 0 points
+
+
+=== Test: Different DC ID ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes?dcId=100001
+
+📊 Status: 200
+✅ Retrieved 1 routes for dcId=100001
+
+
+=== Test: Without dcId Parameter ===
+📍 URL: https://apidev.linengrass.com/api/trips/routes
+
+📊 Status: 200
+✅ Retrieved 35 routes (all DCs)
+
+========================================
+✅ All tests completed successfully!
+========================================
+
+📝 Summary:
+   Total routes found (dcId=100000): 33
+   Total route points across all routes: 0
+   Routes with route points: 0/33
+
+⚠️  WARNING: No routes have route points!
+   This will cause visitRequests to be empty in trip creation.
+
+=== Tests completed at: 2026-04-28T04:15:31.517Z ===

@@ -1,0 +1,202 @@
+=== Scheduled Tasks by Date API Test Results ===
+Test started at: 2026-04-27T16:00:07.467Z
+
+========================================
+Starting Scheduled Tasks by Date Tests
+========================================
+🌐 API URL: https://apidev.linengrass.com
+🔑 Token: eyJhbGciOiJIUzI1NiJ9...
+
+=== Test: Get Scheduled Tasks by Date ===
+📍 URL: https://apidev.linengrass.com/api/trips/scheduled-tasks/by-date
+📦 Request Body:
+{
+  "customerIds": [
+    106963
+  ],
+  "vendorIds": [],
+  "date": "2026-04-26",
+  "dcId": 100000
+}
+
+📊 Status: 200
+📄 Response:
+✅ Scheduled tasks retrieved successfully!
+[
+  {
+    "taskType": "ORDER",
+    "taskId": 123644,
+    "partyId": 106963,
+    "partyType": "CUSTOMER",
+    "partyName": "dam",
+    "status": "PENDING",
+    "scheduledTime": "2026-04-26T00:00:00",
+    "referenceNumber": "ORD-106963-0426-85205",
+    "originalDetails": {
+      "id": 123644,
+      "customerId": 106963,
+      "customerName": "dam",
+      "orderDate": "2026-04-26T00:00:00",
+      "orderType": "LEASING",
+      "status": "PENDING",
+      "notes": "",
+      "referenceNumber": "ORD-106963-0426-85205",
+      "leasingOrderDetails": {
+        "pickupDate": "2026-04-26T00:00:00",
+        "deliveryDate": "2026-04-26T00:00:00",
+        "leasingOrderType": "BOTH",
+        "pickupItems": [
+          {
+            "productId": 100202,
+            "productName": "SINGLE BED SHEET",
+            "productCategory": "BED_LINEN",
+            "quantity": 32,
+            "actualQuantity": 0,
+            "rejectedQuantity": null,
+            "heavySoiledQuantity": null,
+            "damagedQuantity": null,
+            "remarks": null,
+            "rentalDuration": null,
+            "unitPrice": 12
+          },
+          {
+            "productId": 100208,
+            "productName": "DOUBLE BED SHEET",
+            "productCategory": "BED_LINEN",
+            "quantity": 2323,
+            "actualQuantity": 0,
+            "rejectedQuantity": null,
+            "heavySoiledQuantity": null,
+            "damagedQuantity": null,
+            "remarks": null,
+            "rentalDuration": null,
+            "unitPrice": 0
+          }
+        ],
+        "deliveryItems": [
+          {
+            "productId": 100202,
+            "productName": "SINGLE BED SHEET",
+            "productCategory": "BED_LINEN",
+            "quantity": 32,
+            "actualQuantity": 0,
+            "rejectedQuantity": 0,
+            "heavySoiledQuantity": null,
+            "damagedQuantity": null,
+            "remarks": null,
+            "rentalDuration": null,
+            "unitPrice": 12
+          },
+          {
+            "productId": 100208,
+            "productName": "DOUBLE BED SHEET",
+            "productCategory": "BED_LINEN",
+            "quantity": 2323,
+            "actualQuantity": 0,
+            "rejectedQuantity": 0,
+            "heavySoiledQuantity": null,
+            "damagedQuantity": null,
+            "remarks": null,
+            "rentalDuration": null,
+            "unitPrice": 0
+          }
+        ],
+        "orderFulfillment": {
+          "id": 117589,
+          "status": "PENDING",
+          "fulfillmentStartDate": "2026-04-26T00:00:00",
+          "fulfillmentCompletionDate": null
+        },
+        "pickupFulfillment": {
+          "id": 117077,
+          "orderId": null,
+          "pickupDate": "2026-04-26T00:00:00",
+          "status": "PENDING",
+          "items": null
+        },
+        "rejectionRequests": []
+      },
+      "rentalOrderDetails": null,
+      "washingOrderDetails": null,
+      "isAdjustment": false,
+      "invoiced": false
+    }
+  }
+]
+
+=== Response Validation ===
+✓ Response is an array with 1 scheduled tasks
+
+First task structure:
+✗ id: undefined
+✗ customerId: undefined
+✗ customerName: undefined
+✗ scheduledDate: undefined
+✓ taskType: ORDER
+✓ status: PENDING
+✗ dcId: undefined
+
+=== Tasks by Type ===
+ORDER: 1
+
+=== Tasks by Status ===
+PENDING: 1
+
+
+=== Test: Multiple Customers ===
+📦 Request Body:
+{
+  "customerIds": [
+    106963,
+    106964,
+    106965
+  ],
+  "vendorIds": [],
+  "date": "2026-04-26",
+  "dcId": 100000
+}
+
+📊 Status: 200
+✅ Retrieved 1 scheduled tasks
+
+
+=== Test: With Vendors ===
+📦 Request Body:
+{
+  "customerIds": [
+    106963
+  ],
+  "vendorIds": [
+    1,
+    2
+  ],
+  "date": "2026-04-26",
+  "dcId": 100000
+}
+
+📊 Status: 200
+✅ Retrieved 1 scheduled tasks
+
+
+=== Test: Different Date ===
+📦 Request Body:
+{
+  "customerIds": [
+    106963
+  ],
+  "vendorIds": [],
+  "date": "2026-04-27",
+  "dcId": 100000
+}
+
+📊 Status: 200
+✅ Retrieved 0 scheduled tasks
+
+========================================
+✅ All tests completed successfully!
+========================================
+
+📝 Summary:
+   Total tasks found (Test 1): 1
+
+=== Tests completed at: 2026-04-27T16:00:07.928Z ===

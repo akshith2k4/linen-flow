@@ -71,5 +71,43 @@
         "skip_if_all_optional": false
       }
     }
+  },
+  "wash": {
+    "name": "Wash Management",
+    "description": "Wash requests for soiled linen, wash fulfillments, and vendor washing operations",
+    "workflows": [
+      "create_wash_request"
+    ],
+    "shared_data_keys": [
+      "wash_request_id",
+      "dcId",
+      "laundryVendorId",
+      "poolId"
+    ],
+    "form_behavior": {
+      "auto_skip": {
+        "enabled": false,
+        "skip_if_all_optional": false
+      }
+    }
+  },
+  "trips": {
+    "name": "Trip Management",
+    "description": "Create and manage delivery/pickup trips with route-based visit scheduling",
+    "workflows": [
+      "create_trip"
+    ],
+    "shared_data_keys": [
+      "trip_id",
+      "dcId",
+      "routeId",
+      "routeName"
+    ],
+    "form_behavior": {
+      "auto_skip": {
+        "enabled": false,
+        "skip_if_all_optional": false
+      }
+    }
   }
 }

@@ -12,7 +12,7 @@ import {
   getOrderById, listOrders, searchOrders, getOrdersByCustomer,
   getIncompleteOrdersByCustomer, getPickupFulfillmentForOrder,
   getProductById, listProducts, searchProducts,
-  listRoutes, getRouteById, listVendors
+  listRoutes, getRouteById, listVendors, searchWashRequests
 } from "./tools";
 import { IntentState } from "./state";
 import workflows from "./workflows/index";
@@ -34,7 +34,7 @@ const ALL_TOOLS = [
   getOrderById, listOrders, searchOrders, getOrdersByCustomer,
   getIncompleteOrdersByCustomer, getPickupFulfillmentForOrder,
   getProductById, listProducts, searchProducts,
-  listRoutes, getRouteById, listVendors,
+  listRoutes, getRouteById, listVendors, searchWashRequests,
 ];
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

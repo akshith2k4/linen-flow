@@ -24,6 +24,7 @@ Available tools:
 - list_reservations → List reservations (all optional)
 - list_routes → List delivery routes (all optional)
 - list_vendors → List vendors (all optional)
+- search_wash_requests → Search wash requests by date range (params: startTime, endTime — required; dcId, vendorId, status, washRequestType — optional)
 
 MULTI-STEP QUERIES: When the user asks about data for a specific entity by name (e.g., "orders for hotel named X"), you MUST chain tool calls:
 1. First call search_hotels to find the entity and get its ID
